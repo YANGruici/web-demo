@@ -835,26 +835,27 @@ export default {
     '郑州市': [113.64964385, 34.7566100641],
     '驻马店市': [114.049153547, 32.9831581541],
     '鹤壁市': [114.297769838, 35.7554258742],
-  }
+  };
+
   var customerBatteryCityData = [
-    {name: "三门峡市", value: 571},
-    {name: "信阳市", value: 12},
-    {name: "南阳市", value: 11},
-    {name: "周口市", value: 114},
-    {name: "商丘市", value: 91},
-    {name: "安阳市", value: 13},
-    {name: "平顶山市", value: 101},
-    {name: "开封市", value: 15},
-    {name: "新乡市", value: 43},
-    {name: "洛阳市", value: 71},
-    {name: "漯河市", value: 177},
-    {name: "濮阳市", value: 759},
-    {name: "焦作市", value: 641},
-    {name: "许昌市", value: 51},
-    {name: "郑州市", value: 37},
-    {name: "驻马店市", value: 211},
-    {name: "鹤壁市", value: 64},
-  ]
+    { name: "三门峡市", value1: 571, value2: 100, value3: 50 },
+    { name: "信阳市", value1: 12, value2: 5, value3: 2 },
+    { name: "南阳市", value1: 11, value2: 7, value3: 3 },
+    { name: "周口市", value1: 114, value2: 40, value3: 20 },
+    { name: "商丘市", value1: 91, value2: 30, value3: 10 },
+    { name: "安阳市", value1: 13, value2: 6, value3: 4 },
+    { name: "平顶山市", value1: 101, value2: 35, value3: 15 },
+    { name: "开封市", value1: 15, value2: 8, value3: 3 },
+    { name: "新乡市", value1: 43, value2: 20, value3: 10 },
+    { name: "洛阳市", value1: 71, value2: 25, value3: 12 },
+    { name: "漯河市", value1: 177, value2: 60, value3: 30 },
+    { name: "濮阳市", value1: 759, value2: 200, value3: 100 },
+    { name: "焦作市", value1: 641, value2: 180, value3: 90 },
+    { name: "许昌市", value1: 51, value2: 15, value3: 7 },
+    { name: "郑州市", value1: 37, value2: 12, value3: 6 },
+    { name: "驻马店市", value1: 211, value2: 70, value3: 35 },
+    { name: "鹤壁市", value1: 64, value2: 25, value3: 10 },
+  ];
 
   fetch(uploadedDataURL)
       .then(response => response.json())
@@ -862,21 +863,19 @@ export default {
         echarts.registerMap('henan', geoJson);
         option = {
           backgroundColor: '#131C38',
-
           tooltip: {
             trigger: 'item',
-            triggerOn: 'mousemove', // 悬浮显示弹窗
-            showDelay: 0, // 浮层显示的延迟
-            transitionDuration: 0.2, // 提示框浮层的移动动画过渡时间
+            triggerOn: 'mousemove',
+            showDelay: 0,
+            transitionDuration: 0.2,
             enterable: true,
             formatter: function(item) {
-              // Check if item.data exists and has the expected structure
               if (item.data && item.data.name) {
-
-
-                return `<div style="font-size: 16px;line-height: 30px;color:#131d3c">
+                return `<div style="font-size: 16px; line-height: 30px; color: #131d3c;">
                           &nbsp;&nbsp;&nbsp;&nbsp;${item.data.name}<br />
-
+                          Value 1: ${item.data.value1}<br />
+                          Value 2: ${item.data.value2}<br />
+                          Value 3: ${item.data.value3}
                         </div>`;
               } else {
                 return '';
@@ -902,12 +901,12 @@ export default {
                     y2: 0,
                     colorStops: [{
                       offset: 0,
-                      color: 'rgba(37,108,190,0.3)' // 0% 处的颜色
+                      color: 'rgba(37,108,190,0.3)'
                     }, {
                       offset: 1,
-                      color: 'rgba(15,169,195,0.3)' // 50% 处的颜色
+                      color: 'rgba(15,169,195,0.3)'
                     }],
-                    global: true // 缺省为 false
+                    global: true
                   },
                   borderColor: '#4ecee6',
                   borderWidth: 1
@@ -921,12 +920,12 @@ export default {
                     y2: 0,
                     colorStops: [{
                       offset: 0,
-                      color: 'rgba(37,108,190,1)' // 0% 处的颜色
+                      color: 'rgba(37,108,190,1)'
                     }, {
                       offset: 1,
-                      color: 'rgba(15,169,195,1)' // 50% 处的颜色
+                      color: 'rgba(15,169,195,1)'
                     }],
-                    global: false // 缺省为 false
+                    global: false
                   },
                 }
               },
@@ -997,7 +996,6 @@ export default {
                   }
                 }
               },
-
               itemStyle: {
                 normal: {
                   borderColor: '#2ab8ff',
@@ -1018,13 +1016,13 @@ export default {
               zlevel: 5,
               effect: {
                 show: false,
-                symbolSize: 5 // 图标大小
+                symbolSize: 5
               },
               lineStyle: {
-                width: 6, // 尾迹线条宽度
+                width: 6,
                 color: 'rgb(22,255,255, .6)',
-                opacity: 1, // 尾迹线条透明度
-                curveness: 0 // 尾迹线条曲直度
+                opacity: 1,
+                curveness: 0
               },
               label: {
                 show: 0,
@@ -1094,19 +1092,19 @@ export default {
                   r: 0.5,
                   colorStops: [
                     {
-                      offset: 0, color: 'rgb(22,255,255, 0)' // 0% 处的颜色
+                      offset: 0, color: 'rgb(22,255,255, 0)'
                     },
                     {
-                      offset: .75, color: 'rgb(22,255,255, 0)' // 100% 处的颜色
+                      offset: .75, color: 'rgb(22,255,255, 0)'
                     },
                     {
-                      offset: .751, color: 'rgb(22,255,255, 1)' // 100% 处的颜色
+                      offset: .751, color: 'rgb(22,255,255, 1)'
                     },
                     {
-                      offset: 1, color: 'rgb(22,255,255, 1)' // 100% 处的颜色
+                      offset: 1, color: 'rgb(22,255,255, 1)'
                     }
                   ],
-                  global: false // 缺省为 false
+                  global: false
                 },
                 opacity: 1
               },
@@ -1114,42 +1112,39 @@ export default {
               data: scatterData2()
             }
           ]
-        }
+        };
 
         myChart.setOption(option);
-      })
+      });
 
-  // 固定柱形图的高度
   function lineMaxHeight() {
     return 0.2; // 固定高度值
   }
 
-  // 柱状体的主干
   function lineData() {
     return customerBatteryCityData.map((item) => {
       return {
         coords: [geoCoordMap[item.name], [geoCoordMap[item.name][0], geoCoordMap[item.name][1] + lineMaxHeight()]]
-      }
-    })
+      };
+    });
   }
 
-  // 柱状体的顶部
   function scatterData() {
     return customerBatteryCityData.map((item) => {
-      return [geoCoordMap[item.name][0], geoCoordMap[item.name][1] + lineMaxHeight(), item]
-    })
+      return [geoCoordMap[item.name][0], geoCoordMap[item.name][1] + lineMaxHeight(), item];
+    });
   }
 
-  // 柱状体的底部
   function scatterData2() {
     return customerBatteryCityData.map((item) => {
       return {
         name: item.name,
         value: geoCoordMap[item.name]
-      }
-    })
+      };
+    });
   }
-},
+}
+,
 
   }
 }
