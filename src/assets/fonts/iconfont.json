@@ -1,0 +1,44 @@
+{
+  "id": "4645908",
+  "name": "demo",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "4389724",
+      "name": "柱图",
+      "font_class": "histogram",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "37163126",
+      "name": "柱折图",
+      "font_class": "zhuzhetu",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "3851385",
+      "name": "仪表盘",
+      "font_class": "yibiaopan",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
+      "icon_id": "4781601",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "27367200",
+      "name": "时间轴",
+      "font_class": "shijianzhou1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
