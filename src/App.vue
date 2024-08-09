@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- 导航栏 -->
-    <Navigation />
+    <Navigation/>
     <!-- 路由展示页面 -->
     <router-view></router-view>
   </div>

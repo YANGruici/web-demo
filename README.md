@@ -1,4 +1,6 @@
 # 前端学习demo
+欢迎大家加入前端学习，有建议疑问可以提交issues，作者会看。  
+参考学习网站[www.w3schooz在线教程](https://www.w3school.com.cn/)
 ## [echarts](public/markdown/Echarts.md)
 一些基础的echarts学习，包括柱状图、折线图、柱状图折线图结合、饼图、地图、仪表盘这些常用的图形的学习  
 学习网站:  
@@ -11,8 +13,9 @@
 4.[iconfont-阿里巴巴矢量图标库](https://www.iconfont.cn/)  
 ![img4.png](img/img4.png)
 第一个比较常用，第二个是作为学习备用.第三个是地图引用,第四个是图标
-
-后续会更新学习Web前端：HTML、CSS、Bootstrap、JavaScript、JQuery
+## [html](public/markdown/html.md)
+## [css](public/markdown/css.md)
+后续会继续更新学习Web前端：Bootstrap、JavaScript、JQuery.
 
 
 ## Project setup

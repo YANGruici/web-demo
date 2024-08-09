@@ -56,7 +56,7 @@
       </el-menu>
       <dv-border-box1 style="height: 430px; width: 580px;margin-left: 20px">
         <component
-            style="margin: 15px;height: 420px; width: 560px;overflow-y: auto"
+            style="margin: 15px;height: 415px; width: 560px;overflow-y: auto"
             :is="selectedChartComponent"
             :chart-data="selectedChartData"
             v-if="selectedChartComponent"
@@ -64,7 +64,7 @@
       </dv-border-box1>
 
       <dv-border-box6 style="height: 430px; width: 580px; "  :color="['gray', 'gray']">
-        <div dv-bg style="margin: 10px; height: 420px; width: 560px;overflow-y: auto" v-html="markdownContent">
+        <div dv-bg style="margin: 10px; height: 415px; width: 560px;overflow-y: auto" v-html="markdownContent">
         </div>
       </dv-border-box6>
     </div>

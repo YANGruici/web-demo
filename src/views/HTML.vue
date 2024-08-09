@@ -26,12 +26,14 @@
       </el-menu>
 
       <dv-border-box1 style="height: 430px; width: 580px; margin-left: 20px">
-        <div style="margin: 15px; height: 420px; width: 560px; text-align: left;overflow-y: auto" v-html="content"></div>
+        <div style="margin: 15px; height: 415px; width: 560px; text-align: left;overflow-y: auto"
+             v-html="content"></div>
       </dv-border-box1>
 
       <dv-border-box6 style="height: 430px; width: 580px;" :color="['gray', 'gray']">
-        <div style="margin: 10px; height: 420px; width: 560px;overflow-y: auto;" v-html="implementation"></div>
+        <div id="implementation-container" style="margin: 10px; height: 415px; width: 560px; overflow-y: auto; "></div>
       </dv-border-box6>
+
     </div>
   </dv-border-box7>
 </template>
@@ -92,11 +94,11 @@ export default {
       let implementation = '';
       let currentElement = startElement.nextElementSibling;
       while (currentElement && currentElement.tagName !== 'H3' && currentElement.tagName !== 'H2') {
-        if (currentElement.tagName !== 'h3') { // Skip code blocks for content
+        if (currentElement.tagName !== 'H3') { // Skip code blocks for content
           content += currentElement.outerHTML;
         }
         if (currentElement.tagName === 'PRE' && currentElement.querySelector('code')) {
-          implementation += currentElement.outerHTML;
+          implementation += currentElement.querySelector('code').textContent + '\n\n';
         }
         currentElement = currentElement.nextElementSibling;
       }
@@ -106,14 +108,18 @@ export default {
       const [mainIndex, subIndex] = index.split('-');
       const selectedSubItem = this.menuItems[mainIndex].subItems[subIndex];
       this.content = selectedSubItem.content;
-      // Rendering the implementation part as HTML
-      this.implementation = selectedSubItem.implementation;
+
+      // Dynamically insert and execute implementation code
+      const implementationContainer = document.createElement('div');
+      implementationContainer.innerHTML = selectedSubItem.implementation.replace(/\n\n/g, '<br><br>'); // Add spacing between code blocks
+      document.querySelector('#implementation-container').innerHTML = ''; // Clear previous content
+      document.querySelector('#implementation-container').appendChild(implementationContainer);
     }
   }
 };
 </script>
 
-<style >
+<style>
 .chart-container {
   display: flex;
   justify-content: center;
