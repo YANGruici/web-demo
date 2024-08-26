@@ -804,7 +804,8 @@
 
 **属性:**
 
-- `kind`：指定文本轨道的类型（subtitles, captions, descriptions, chapters, metadata）。
+- `kind`：指定文本轨道的类型（subtitles, captions, descriptions, chapters,
+  metadata）。
 - `src`：指定文本轨道文件的 URL。
 - `srclang`：指定文本轨道的语言。
 - `label`：指定文本轨道的标签。
@@ -885,7 +886,9 @@
 
 **属性:**
 
-- `type`：指定输入的类型（text, password, submit, radio, checkbox, button, color, date, datetime-local, email, file, hidden, image, month, number, range, reset, search, tel, time, url, week）。
+- `type`：指定输入的类型（text, password, submit, radio, checkbox, button,
+  color, date, datetime-local, email, file, hidden, image, month,
+  number, range, reset, search, tel, time, url, week）。
 - `name`：指定输入控件的名称。
 - `value`：指定输入控件的初始值。
 
@@ -1586,3 +1589,4 @@
   <input type="submit" value="提交">
 </form>
 ```
+

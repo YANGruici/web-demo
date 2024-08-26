@@ -1,6 +1,6 @@
 # CSS知识总结
 
-##  CSS基本语法
+## CSS基本语法
 
 CSS由选择器和声明块组成。声明块包含一个或多个声明，每个声明由属性和值组成，属性和值之间用冒号分隔，声明之间用分号分隔。
 
@@ -20,7 +20,7 @@ p {
 }
 ```
 
-##  CSS选择器
+## CSS选择器
 
 #### 2.1 基本选择器
 
@@ -92,7 +92,7 @@ input[type="text"] {
 }
 ```
 
-##  CSS盒模型
+## CSS盒模型
 
 CSS盒模型用于描述元素在页面中的布局。一个盒子由四个部分组成：内容、内边距(padding)、边框(border)和外边距(margin)。
 
@@ -105,9 +105,10 @@ div {
 }
 ```
 
-在上述例子中，元素的总宽度为：300px（内容宽度）+ 20px*2（内边距）+ 10px*2（边框）+ 30px*2（外边距）。
+在上述例子中，元素的总宽度为：300px（内容宽度）+ 20px*2（内边距）+ 10px*2（边框）+
+30px*2（外边距）。
 
-##  CSS布局
+## CSS布局
 
 #### 4.1 常见布局模型
 
@@ -147,7 +148,6 @@ Flexbox是一种用于排列元素的一维布局模型，可以方便地创建�
   display: flex;
   justify-content: space-between;
 }
-
 .item {
   flex: 1;
 }
@@ -163,13 +163,12 @@ CSS Grid Layout是一种二维布局模型，可以在垂直和水平方向上�
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
 }
-
 .item {
   background-color: lightblue;
 }
 ```
 
-##  CSS动画
+## CSS动画
 
 使用CSS动画可以创建平滑的过渡效果。
 
@@ -182,7 +181,6 @@ div {
   background-color: red;
   transition: background-color 0.5s;
 }
-
 div:hover {
   background-color: blue;
 }
@@ -195,7 +193,6 @@ div:hover {
   from {background-color: red;}
   to {background-color: yellow;}
 }
-
 div {
   width: 100px;
   height: 100px;
@@ -204,7 +201,7 @@ div {
 }
 ```
 
-##  媒体查询
+## 媒体查询
 
 媒体查询用于根据设备的特性（如宽度、高度、分辨率等）应用不同的CSS规则。
 
@@ -216,7 +213,7 @@ div {
 }
 ```
 
-##  CSS变量
+## CSS变量
 
 CSS变量（自定义属性）允许你定义可重用的值。
 
@@ -225,14 +222,13 @@ CSS变量（自定义属性）允许你定义可重用的值。
   --main-color: #06c;
   --padding: 10px;
 }
-
 div {
   color: var(--main-color);
   padding: var(--padding);
 }
 ```
 
-##  响应式设计
+## 响应式设计
 
 响应式设计是一种网页设计方法，旨在使网页在不同设备上都能良好显示。
 
@@ -258,7 +254,7 @@ div {
 }
 ```
 
-##  常用CSS属性
+## 常用CSS属性
 
 - **颜色**: `color`, `background-color`
 - **字体**: `font-family`, `font-size`, `font-weight`
@@ -268,7 +264,8 @@ div {
 - **尺寸**: `width`, `height`, `max-width`, `min-height`
 - **显示**: `display`, `visibility`
 - **定位**: `position`, `top`, `right`, `bottom`, `left`, `z-index`
-##  CSS优先级和层叠
+
+## CSS优先级和层叠
 
 CSS中的样式规则可能会互相冲突，当多条规则作用于同一元素时，CSS需要决定哪条规则更优先。这时就要用到CSS的优先级（specificity）和层叠（cascading）原则。
 
@@ -276,9 +273,11 @@ CSS中的样式规则可能会互相冲突，当多条规则作用于同一元�
 
 优先级由四个部分组成，从左到右依次为：内联样式、ID选择器、类/伪类/属性选择器、元素选择器。数值越高优先级越高。
 
-- **内联样式**: 直接在HTML元素上定义的样式，优先级最高。比如：`<div style="color: red;"></div>`
+- **内联样式**: 直接在HTML元素上定义的样式，优先级最高。比如：`<div style="color:
+  red;"></div>`
 - **ID选择器**: 比如 `#header`
-- **类选择器、伪类选择器、属性选择器**: 比如 `.intro`, `:hover`, `[type="text"]`
+- **类选择器、伪类选择器、属性选择器**: 比如 `.intro`, `:hover`,
+  `[type="text"]`
 - **元素选择器**: 比如 `p`, `div`
 
 例如：
@@ -287,11 +286,9 @@ CSS中的样式规则可能会互相冲突，当多条规则作用于同一元�
 #header {
   color: blue; /* 优先级：100 */
 }
-
 .intro {
   color: green; /* 优先级：10 */
 }
-
 div {
   color: red; /* 优先级：1 */
 }
@@ -305,7 +302,6 @@ div {
 p {
   color: red;
 }
-
 p {
   color: blue;
 }
@@ -323,7 +319,7 @@ p {
 }
 ```
 
-##  伪类和伪元素
+## 伪类和伪元素
 
 伪类和伪元素允许你选择并设计特定状态或特定部分的元素。
 
@@ -341,11 +337,9 @@ p {
 a:hover {
   color: orange;
 }
-
 input:focus {
   border-color: blue;
 }
-
 li:nth-child(2) {
   background-color: yellow;
 }
@@ -367,7 +361,6 @@ p::first-letter {
   font-size: 2em;
   color: red;
 }
-
 p::before {
   content: "Note: ";
   font-weight: bold;
@@ -375,7 +368,7 @@ p::before {
 }
 ```
 
-##  CSS框架
+## CSS框架
 
 CSS框架提供了预定义的样式和布局组件，帮助开发者快速构建网页。常见的CSS框架包括：
 
@@ -387,7 +380,6 @@ CSS框架提供了预定义的样式和布局组件，帮助开发者快速构�
 
 ```html
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
 <div class="container">
   <div class="row">
     <div class="col-md-4">Column 1</div>
@@ -397,7 +389,7 @@ CSS框架提供了预定义的样式和布局组件，帮助开发者快速构�
 </div>
 ```
 
-##  现代CSS功能
+## 现代CSS功能
 
 #### 13.1 CSS Grid高级特性
 
@@ -411,11 +403,9 @@ CSS框架提供了预定义的样式和布局组件，帮助开发者快速构�
     "sidebar content content"
     "footer footer footer";
 }
-
 .header {
   grid-area: header;
 }
-
 .sidebar {
   grid-area: sidebar;
 }
@@ -423,7 +413,6 @@ CSS框架提供了预定义的样式和布局组件，帮助开发者快速构�
 .content {
   grid-area: content;
 }
-
 .footer {
   grid-area: footer;
 }
@@ -437,7 +426,6 @@ CSS变量可以与JavaScript结合使用，动态地改变页面样式。
 :root {
   --main-bg-color: lightblue;
 }
-
 body {
   background-color: var(--main-bg-color);
 }
@@ -462,3 +450,4 @@ font-size: clamp(16px, 4vw, 24px);
 ```css
 width: min(50%, 300px);
 ```
+

@@ -1,76 +1,86 @@
 <template>
-  <dv-border-box7 class="chart-container">
+  <dv-border-box7 class="chart-container" >
     <div class="chart-wrapper">
       <el-menu
-          default-active="1"
-          class="el-menu-vertical"
+          :active-text-color="menuActiveTextColor"
           :background-color="menuBgColor"
           :text-color="menuTextColor"
-          :active-text-color="menuActiveTextColor"
+          class="el-menu-vertical"
+          default-active="1"
           @select="handleMenuSelect"
       >
         <el-menu-item index="1">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-histogram"></use>
           </svg>
-          <span>柱图</span>
+          <span>柱状图</span>
         </el-menu-item>
         <el-menu-item index="2">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-histogram"></use>
           </svg>
-          <span>柱图</span>
+          <span>堆叠柱状图</span>
         </el-menu-item>
         <el-menu-item index="3">
-          <el-icon><DataLine /></el-icon>
+          <el-icon>
+            <DataLine/>
+          </el-icon>
           <span>折线图</span>
         </el-menu-item>
         <el-menu-item index="4">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-zhuzhetu"></use>
           </svg>
           <span>柱折结合图</span>
         </el-menu-item>
         <el-menu-item index="5">
-          <el-icon><PieChart /></el-icon>
+          <el-icon>
+            <PieChart/>
+          </el-icon>
           <span>饼图</span>
         </el-menu-item>
         <el-menu-item index="6">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-ditu"></use>
           </svg>
           <span>地图</span>
         </el-menu-item>
         <el-menu-item index="7">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-yibiaopan"></use>
           </svg>
           <span>仪表盘</span>
         </el-menu-item>
         <el-menu-item index="8">
-          <svg class="icon" aria-hidden="true">
+          <svg aria-hidden="true" class="icon">
             <use xlink:href="#icon-shijianzhou1"></use>
           </svg>
           <span>时间轴</span>
         </el-menu-item>
       </el-menu>
-      <dv-border-box1 style="height: 430px; width: 580px;margin-left: 20px">
-        <component
-            style="margin: 15px;height: 415px; width: 560px;overflow-y: auto"
-            :is="selectedChartComponent"
-            :chart-data="selectedChartData"
-            v-if="selectedChartComponent"
-        ></component>
+      <dv-border-box1 style="height: 570px; width: 580px; margin: 20px;">
+        <div
+            id="implementation-container "
+            style="margin: 15px; height: 540px; width: 560px; text-align: left;overflow-y: auto;"
+            class="markdown-body"
+            v-html="markdownContent"
+            @click="handleCopyButtonClick"
+        ></div>
       </dv-border-box1>
 
-      <dv-border-box6 style="height: 430px; width: 580px; "  :color="['gray', 'gray']">
-        <div dv-bg style="margin: 10px; height: 415px; width: 560px;overflow-y: auto" v-html="markdownContent">
-        </div>
+      <dv-border-box6 :color="['gray', 'gray']" style="height: 570px; width: 580px;margin: 20px " >
+        <p style="margin: 15px;font-family: 华文新魏">优化样式</p>
+        <component
+            :is="selectedChartComponent"
+            v-if="selectedChartComponent"
+            :chart-data="selectedChartData"
+            style="margin: 10px;height: 520px; width: 560px;overflow-y: auto"
+        ></component>
       </dv-border-box6>
     </div>
+
   </dv-border-box7>
 </template>
-
 <script>
 import {DataLine, Menu as IconMenu, PieChart} from '@element-plus/icons-vue';
 import ChartBar from '../components/ChartBar.vue';
@@ -84,6 +94,9 @@ import ChartTime from '../components/ChartTime.vue';
 import {BorderBox1 as DvBorderBox1, BorderBox6 as DvBorderBox6, BorderBox7 as DvBorderBox7} from '@kjgl77/datav-vue3';
 import '@/assets/fonts/iconfont.js';
 import {fetchMarkdown} from '@/utils/markdown';
+import { marked } from 'marked';
+import hljs from 'highlight.js';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: 'ECharts',
@@ -138,11 +151,11 @@ export default {
         pie: {
           color: ['rgba(220, 145, 255, 1)', 'rgba(245, 154, 108, 1)', 'rgba(139, 111, 255, 1)', 'rgba(120, 187, 255, 1)', 'rgba(124, 168, 255, 1)'],
           seriesData: [
-            { "name": "治安单位", "value": 1243 },
-            { "name": "内保单位", "value": 629 },
-            { "name": "人管单位", "value": 1629 },
-            { "name": "国保单位", "value": 3425 },
-            { "name": "禁毒单位", "value": 2824 },
+            {"name": "治安单位", "value": 1243},
+            {"name": "内保单位", "value": 629},
+            {"name": "人管单位", "value": 1629},
+            {"name": "国保单位", "value": 3425},
+            {"name": "禁毒单位", "value": 2824},
           ]
         },
         line: {
@@ -177,24 +190,24 @@ export default {
             '济源市': [112.602920675, 35.06724323]
           },
           customerBatteryCityData: [
-            { name: "三门峡市", values: { 卡号: 571, 宽带: 100, 终端: 50 } },
-            { name: "信阳市", values: { 卡号: 12, 宽带: 5, 终端: 2 } },
-            { name: "南阳市", values: { 卡号: 11, 宽带: 7, 终端: 3 } },
-            { name: "周口市", values: { 卡号: 114, 宽带: 40, 终端: 20 } },
-            { name: "商丘市", values: { 卡号: 91, 宽带: 30, 终端: 10 } },
-            { name: "安阳市", values: { 卡号: 13, 宽带: 6, 终端: 4 } },
-            { name: "平顶山市", values: { 卡号: 101, 宽带: 35, 终端: 15 } },
-            { name: "开封市", values: { 卡号: 15, 宽带: 8, 终端: 3 } },
-            { name: "新乡市", values: { 卡号: 43, 宽带: 20, 终端: 10 } },
-            { name: "洛阳市", values: { 卡号: 71, 宽带: 25, 终端: 12 } },
-            { name: "漯河市", values: { 卡号: 177, 宽带: 60, 终端: 30 } },
-            { name: "濮阳市", values: { 卡号: 759, 宽带: 200, 终端: 100 } },
-            { name: "焦作市", values: { 卡号: 641, 宽带: 180, 终端: 90 } },
-            { name: "许昌市", values: { 卡号: 51, 宽带: 15, 终端: 7 } },
-            { name: "郑州市", values: { 卡号: 37, 宽带: 12, 终端: 6 } },
-            { name: "驻马店市", values: { 卡号: 211, 宽带: 70, 终端: 35 } },
-            { name: "鹤壁市", values: { 卡号: 64, 宽带: 25, 终端: 10 } },
-            { name: "济源市", values: { 卡号: 64, 宽带: 25, 终端: 10 } },
+            {name: "三门峡市", values: {卡号: 571, 宽带: 100, 终端: 50}},
+            {name: "信阳市", values: {卡号: 12, 宽带: 5, 终端: 2}},
+            {name: "南阳市", values: {卡号: 11, 宽带: 7, 终端: 3}},
+            {name: "周口市", values: {卡号: 114, 宽带: 40, 终端: 20}},
+            {name: "商丘市", values: {卡号: 91, 宽带: 30, 终端: 10}},
+            {name: "安阳市", values: {卡号: 13, 宽带: 6, 终端: 4}},
+            {name: "平顶山市", values: {卡号: 101, 宽带: 35, 终端: 15}},
+            {name: "开封市", values: {卡号: 15, 宽带: 8, 终端: 3}},
+            {name: "新乡市", values: {卡号: 43, 宽带: 20, 终端: 10}},
+            {name: "洛阳市", values: {卡号: 71, 宽带: 25, 终端: 12}},
+            {name: "漯河市", values: {卡号: 177, 宽带: 60, 终端: 30}},
+            {name: "濮阳市", values: {卡号: 759, 宽带: 200, 终端: 100}},
+            {name: "焦作市", values: {卡号: 641, 宽带: 180, 终端: 90}},
+            {name: "许昌市", values: {卡号: 51, 宽带: 15, 终端: 7}},
+            {name: "郑州市", values: {卡号: 37, 宽带: 12, 终端: 6}},
+            {name: "驻马店市", values: {卡号: 211, 宽带: 70, 终端: 35}},
+            {name: "鹤壁市", values: {卡号: 64, 宽带: 25, 终端: 10}},
+            {name: "济源市", values: {卡号: 64, 宽带: 25, 终端: 10}},
           ]
         },
         gauge: {
@@ -207,19 +220,19 @@ export default {
           titles: ['2013就业', '2014就业', '2015就业'],
           seriesData: [
             [
-              { name: '硕士', data: [ { name: '华为', value: 50 }, { name: '百度', value: 10 }, { name: '腾讯', value: 40 } ] },
-              { name: '本科生', data: [ { name: '华为', value: 40 }, { name: '百度', value: 30 }, { name: '腾讯', value: 30 } ] },
-              { name: '博士', data: [ { name: '华为', value: 20 }, { name: '百度', value: 30 }, { name: '腾讯', value: 50 } ] }
+              {name: '硕士', data: [{name: '华为', value: 50}, {name: '百度', value: 10}, {name: '腾讯', value: 40}]},
+              {name: '本科生', data: [{name: '华为', value: 40}, {name: '百度', value: 30}, {name: '腾讯', value: 30}]},
+              {name: '博士', data: [{name: '华为', value: 20}, {name: '百度', value: 30}, {name: '腾讯', value: 50}]}
             ],
             [
-              { name: '硕士', data: [ { name: '华为', value: 50 }, { name: '百度', value: 30 }, { name: '腾讯', value: 20 } ] },
-              { name: '本科生', data: [ { name: '华为', value: 40 }, { name: '百度', value: 55 }, { name: '腾讯', value: 5 } ] },
-              { name: '博士', data: [ { name: '华为', value: 30 }, { name: '百度', value: 20 }, { name: '腾讯', value: 50 } ] }
+              {name: '硕士', data: [{name: '华为', value: 50}, {name: '百度', value: 30}, {name: '腾讯', value: 20}]},
+              {name: '本科生', data: [{name: '华为', value: 40}, {name: '百度', value: 55}, {name: '腾讯', value: 5}]},
+              {name: '博士', data: [{name: '华为', value: 30}, {name: '百度', value: 20}, {name: '腾讯', value: 50}]}
             ],
             [
-              { name: '硕士', data: [ { name: '华为', value: 40 }, { name: '百度', value: 20 }, { name: '腾讯', value: 40 } ] },
-              { name: '本科生', data: [ { name: '华为', value: 40 }, { name: '百度', value: 40 }, { name: '腾讯', value: 20 } ] },
-              { name: '博士', data: [ { name: '华为', value: 10 }, { name: '百度', value: 40 }, { name: '腾讯', value: 50 } ] }
+              {name: '硕士', data: [{name: '华为', value: 40}, {name: '百度', value: 20}, {name: '腾讯', value: 40}]},
+              {name: '本科生', data: [{name: '华为', value: 40}, {name: '百度', value: 40}, {name: '腾讯', value: 20}]},
+              {name: '博士', data: [{name: '华为', value: 10}, {name: '百度', value: 40}, {name: '腾讯', value: 50}]}
             ]
           ]
         }
@@ -241,23 +254,23 @@ export default {
       await this.updateMarkdownContent(index);
     },
     async updateMarkdownContent(index) {
-      const fileName = 'Echarts.md'; // 可以根据需求动态调整文件名
+      const fileName = 'echarts.md'; // 可以根据需求动态调整文件名
       const markdownContent = await fetchMarkdown(fileName);
       const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(markdownContent, 'text/html');
+      const htmlDoc = parser.parseFromString(marked(markdownContent), 'text/html');
 
       let content = '';
       let startElement, endElement;
       switch (index) {
         case '1': // First Bar Chart
-          startElement = Array.from(htmlDoc.querySelectorAll('h3')).find(el => el.textContent.includes('第一个柱状图'));
+          startElement = Array.from(htmlDoc.querySelectorAll('h3')).find(el => el.textContent.includes('柱状图'));
           endElement = startElement?.nextElementSibling;
           if (startElement && endElement) {
             content = this.extractContentUntilTag(endElement, 'h3', 'h2');
           }
           break;
         case '2': // Second Bar Chart
-          startElement = Array.from(htmlDoc.querySelectorAll('h3')).find(el => el.textContent.includes('第二个柱状图'));
+          startElement = Array.from(htmlDoc.querySelectorAll('h3')).find(el => el.textContent.includes('堆叠柱状图'));
           endElement = startElement?.nextElementSibling;
           if (startElement && endElement) {
             content = this.extractContentUntilTag(endElement, 'h3', 'h2');
@@ -309,7 +322,7 @@ export default {
           content = '';
       }
 
-      this.markdownContent = content;
+      this.markdownContent = this.highlightCodeBlocks(content);
     },
     extractContentUntilTag(startElement, ...stopTags) {
       let content = '';
@@ -319,12 +332,65 @@ export default {
         currentElement = currentElement.nextElementSibling;
       }
       return content;
+    },
+    highlightCodeBlocks(content) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      const codeBlocks = tempDiv.querySelectorAll('pre code');
+      codeBlocks.forEach((block) => {
+        hljs.highlightElement(block);
+
+        const button = document.createElement('button');
+        button.textContent = 'Copy';
+        button.className = 'copy-button';
+        button.dataset.code = block.textContent;
+        button.style.position = 'absolute';
+        button.style.top = '10px';
+        button.style.right = '10px';
+
+        const languageClass = block.className.match(/language-([a-zA-Z0-9_-]+)/);
+        const languageName = languageClass ? languageClass[1] : 'unknown';
+        const languageLabel = document.createElement('div');
+        languageLabel.textContent = languageName;
+        languageLabel.className = 'code-language-label';
+
+        const pre = block.parentElement;
+        pre.style.position = 'relative';
+        pre.insertBefore(languageLabel, block);
+        pre.appendChild(button);
+      });
+      return tempDiv.innerHTML;
+    },
+    handleCopyButtonClick(event) {
+      if (event.target.classList.contains('copy-button')) {
+        const code = event.target.dataset.code;
+        this.copyToClipboard(code);
+      }
+    },
+    async copyToClipboard(text) {
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(text);
+          ElMessage({
+            message: 'Code copied to clipboard!',
+            type: 'success',
+          });
+        } catch (e) {
+          console.error('Failed to copy: ', e);
+          ElMessage.error('Failed to copy code!');
+        }
+      } else {
+        console.error('Clipboard not supported');
+        ElMessage.error('Clipboard not supported');
+      }
     }
+  },
+  mounted() {
+    this.handleMenuSelect('1'); // 默认选择柱状图
   }
 }
 </script>
-
-<style scoped>
+<style>
 .chart-container {
   display: flex;
   justify-content: center;
@@ -336,12 +402,17 @@ export default {
 .chart-wrapper {
   margin: 30px;
   display: flex;
-  height: 430px;
+  height:100%;
   width: 100%;
 }
 
 .el-menu-vertical {
   width: 200px;
+  height:100%;
+  overflow-y: auto;
+  background-color: #f7f9fc;
+  border-right: 1px solid #e6e6e6;
+  border-radius: 5px;
 }
 
 .el-menu-vertical .el-menu-item {
@@ -361,6 +432,7 @@ export default {
 .el-menu-vertical .el-menu-item.is-active {
   background-color: #409EFF;
   color: white;
+  border-radius: 4px;
 }
 
 .icon {
@@ -370,5 +442,59 @@ export default {
   fill: currentColor;
   overflow: hidden;
   margin-right: 5px;
+}
+
+pre {
+  position: relative;
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 10px;
+  overflow: auto;
+  color: #dcdcdc;
+  font-size: 14px;
+  font-family: 'Fira Code', monospace;
+}
+
+pre .code-language-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #007acc;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+
+pre button {
+  background-color: #007acc;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+pre button:hover {
+  background-color: #005f9e;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
 }
 </style>

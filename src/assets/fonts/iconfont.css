@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4645908 */
-  src: url('iconfont.woff2?t=1723006146562') format('woff2'),
-       url('iconfont.woff?t=1723006146562') format('woff'),
-       url('iconfont.ttf?t=1723006146562') format('truetype');
+  src: url('iconfont.woff2?t=1724504420947') format('woff2'),
+       url('iconfont.woff?t=1724504420947') format('woff'),
+       url('iconfont.ttf?t=1724504420947') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,54 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-html5:before {
+  content: "\e602";
+}
+
+.icon-css:before {
+  content: "\e653";
+}
+
+.icon-jquery:before {
+  content: "\e655";
+}
+
+.icon-bootstrap:before {
+  content: "\e683";
+}
+
+.icon-xiaochengxu:before {
+  content: "\e63e";
+}
+
+.icon-react:before {
+  content: "\e68b";
+}
+
+.icon-vue:before {
+  content: "\e69a";
+}
+
+.icon-javascript:before {
+  content: "\e6f7";
+}
+
+.icon-echarts:before {
+  content: "\e63f";
+}
+
+.icon-tiaozhuanfast:before {
+  content: "\e7ce";
+}
+
+.icon-github:before {
+  content: "\e601";
+}
+
+.icon--startup:before {
+  content: "\e623";
 }
 
 .icon-histogram:before {

@@ -1,8 +1,8 @@
 <template>
-  <dv-border-box7 class="chart-container">
-    <div class="chart-wrapper">
+  <div class="markdown-renderer">
+    <div class="sidebar">
       <el-menu
-          default-active="2"
+          default-active="0-0"
           class="el-menu-vertical"
           :background-color="menuBgColor"
           :text-color="menuTextColor"
@@ -24,53 +24,68 @@
           </el-menu-item>
         </el-sub-menu>
       </el-menu>
-
-      <dv-border-box1 style="height: 430px; width: 580px; margin-left: 20px">
-        <div style="margin: 15px; height: 415px; width: 560px; text-align: left;overflow-y: auto"
-             v-html="content"></div>
-      </dv-border-box1>
-
-      <dv-border-box6 style="height: 430px; width: 580px;" :color="['gray', 'gray']">
-        <div id="implementation-container" style="margin: 10px; height: 415px; width: 560px; overflow-y: auto; "></div>
-      </dv-border-box6>
-
     </div>
-  </dv-border-box7>
+    <div class="content">
+      <div v-html="content" class="markdown-body" @click="handleCopyButtonClick"></div>
+    </div>
+  </div>
 </template>
 
 <script>
-import {BorderBox1 as DvBorderBox1, BorderBox6 as DvBorderBox6, BorderBox7 as DvBorderBox7} from '@kjgl77/datav-vue3';
-import {fetchMarkdown} from '@/utils/markdown';
-import {Menu as IconMenu} from '@element-plus/icons-vue';
+import { fetchMarkdown } from '@/utils/markdown';
+import { marked } from 'marked';
+import hljs from 'highlight.js';
+import { ElMessage } from 'element-plus';
+import { Menu as IconMenu } from '@element-plus/icons-vue';
 
 export default {
-  name: 'HTML',
+  name: 'MarkdownRenderer',
   components: {
-    DvBorderBox1,
-    DvBorderBox6,
-    DvBorderBox7,
     IconMenu,
   },
   data() {
     return {
       menuItems: [],
       content: '',
-      implementation: '',
       menuBgColor: '#fff',
       menuTextColor: '#333',
       menuActiveTextColor: '#409EFF',
     };
   },
   async created() {
-    const markdownContent = await fetchMarkdown('html.md');
+    const markdownContent = await fetchMarkdown(this.$route.params.markdownFile + '.md');
     this.parseMarkdown(markdownContent);
   },
   methods: {
     parseMarkdown(markdownContent) {
       const parser = new DOMParser();
-      const htmlDoc = parser.parseFromString(markdownContent, 'text/html');
+      const htmlContent = parser.parseFromString(marked(markdownContent), 'text/html');
 
-      const h2Elements = Array.from(htmlDoc.querySelectorAll('h2'));
+      const codeBlocks = htmlContent.querySelectorAll('pre code');
+      codeBlocks.forEach((block) => {
+        hljs.highlightElement(block);
+
+        const button = document.createElement('button');
+        button.textContent = 'Copy';
+        button.className = 'copy-button';
+        button.dataset.code = block.textContent;
+        button.style.position = 'absolute';
+        button.style.top = '10px';
+        button.style.right = '10px';
+
+        const languageClass = block.className.match(/language-([a-zA-Z0-9_-]+)/);
+        const languageName = languageClass ? languageClass[1] : 'unknown';
+        const languageLabel = document.createElement('div');
+        languageLabel.textContent = languageName;
+        languageLabel.className = 'code-language-label';
+
+        const pre = block.parentElement;
+        pre.style.position = 'relative';
+        pre.insertBefore(languageLabel, block);
+        pre.appendChild(button);
+      });
+
+      const h2Elements = Array.from(htmlContent.querySelectorAll('h2'));
       h2Elements.forEach((h2Element) => {
         const menuItem = {
           title: h2Element.textContent,
@@ -81,82 +96,129 @@ export default {
         while (nextElement && nextElement.tagName !== 'H2') {
           if (nextElement.tagName === 'H3') {
             const subItemContent = this.extractContent(nextElement);
-            menuItem.subItems.push({ title: nextElement.textContent, content: subItemContent.content, implementation: subItemContent.implementation });
+            menuItem.subItems.push({ title: nextElement.textContent, content: subItemContent.content });
           }
           nextElement = nextElement.nextElementSibling;
         }
 
         this.menuItems.push(menuItem);
       });
+
+      if (this.menuItems.length > 0 && this.menuItems[0].subItems.length > 0) {
+        this.handleMenuSelect('0-0');
+      }
     },
     extractContent(startElement) {
       let content = '';
-      let implementation = '';
       let currentElement = startElement.nextElementSibling;
       while (currentElement && currentElement.tagName !== 'H3' && currentElement.tagName !== 'H2') {
-        if (currentElement.tagName !== 'H3') { // Skip code blocks for content
+        if (currentElement.tagName !== 'H3') {
           content += currentElement.outerHTML;
-        }
-        if (currentElement.tagName === 'PRE' && currentElement.querySelector('code')) {
-          implementation += currentElement.querySelector('code').textContent + '\n\n';
         }
         currentElement = currentElement.nextElementSibling;
       }
-      return { content, implementation };
+      return { content };
     },
     handleMenuSelect(index) {
       const [mainIndex, subIndex] = index.split('-');
       const selectedSubItem = this.menuItems[mainIndex].subItems[subIndex];
       this.content = selectedSubItem.content;
-
-      // Dynamically insert and execute implementation code
-      const implementationContainer = document.createElement('div');
-      implementationContainer.innerHTML = selectedSubItem.implementation.replace(/\n\n/g, '<br><br>'); // Add spacing between code blocks
-      document.querySelector('#implementation-container').innerHTML = ''; // Clear previous content
-      document.querySelector('#implementation-container').appendChild(implementationContainer);
+    },
+    handleCopyButtonClick(event) {
+      if (event.target.classList.contains('copy-button')) {
+        const code = event.target.dataset.code;
+        this.copyToClipboard(code);
+      }
+    },
+    async copyToClipboard(text) {
+      if (navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(text);
+          ElMessage({
+            message: 'Code copied to clipboard!',
+            type: 'success',
+          });
+        } catch (e) {
+          console.error('Failed to copy: ', e);
+          ElMessage.error('Failed to copy code!');
+        }
+      } else {
+        console.error('Clipboard not supported');
+        ElMessage.error('Clipboard not supported');
+      }
     }
   }
 };
 </script>
 
-<style>
-.chart-container {
+<style scoped>
+.markdown-renderer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
 }
 
-.chart-wrapper {
-  margin: 30px;
-  display: flex;
-  height: 430px;
-  width: 100%;
-}
-
-.el-menu-vertical {
-  width: 200px;
-  height: 430px;
+.sidebar {
+  width: 250px;
+  background-color: #f7f9fc;
+  border-right: 1px solid #e6e6e6;
   overflow-y: auto;
 }
 
-.el-menu-vertical .el-menu-item {
-  padding: 10px;
-  display: flex;
-  align-items: center;
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-.el-menu-vertical .el-menu-item .el-icon {
-  margin-right: 8px;
+.el-menu-vertical {
+  border-right: none;
 }
 
-.el-menu-vertical .el-menu-item:hover {
-  background-color: #f5f5f5;
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.el-menu-vertical .el-menu-item.is-active {
-  background-color: #409EFF;
+pre {
+  position: relative;
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 10px;
+  overflow: auto;
+  color: #dcdcdc;
+  font-size: 14px;
+  font-family: 'Fira Code', monospace;
+}
+
+pre .code-language-label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #007acc;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+
+pre button {
+  background-color: #007acc;
   color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+pre button:hover {
+  background-color: #005f9e;
 }
 </style>

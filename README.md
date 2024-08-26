@@ -1,7 +1,8 @@
 # 前端学习demo
+
 欢迎大家加入前端学习，有建议疑问可以提交issues，作者会看。  
 参考学习网站[www.w3schooz在线教程](https://www.w3school.com.cn/)
-## [echarts](public/markdown/Echarts.md)
+## [echarts](public/markdown/echarts.md)
 一些基础的echarts学习，包括柱状图、折线图、柱状图折线图结合、饼图、地图、仪表盘这些常用的图形的学习  
 学习网站:  
 1.[Echarts图标集](https://www.isqqw.com)
@@ -40,6 +41,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
 
 

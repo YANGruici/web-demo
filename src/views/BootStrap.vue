@@ -17,3 +17,11 @@ export default {
   }
 }
 </script>
+<style>
+div{
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+</style>
