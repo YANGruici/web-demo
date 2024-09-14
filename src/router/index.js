@@ -1,12 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/HOME.vue'
-
-import MarkdownRenderer from '../views/MarkdownRenderer.vue';
 const routes = [
-    { path: '/', name: 'Home', component: Home },
-    { path: '/:markdownFile', name: 'MarkdownRenderer', component: MarkdownRenderer },
+    { path: '/', name: 'Home', component: () => import('../views/HOME.vue') },
+    { path: '/:markdownFile', name: 'MarkdownRenderer', component: () => import('../views/MarkdownRenderer.vue') }
+];
 
-]
 
 const router = createRouter({
     history: createWebHistory('/web-demo/'),

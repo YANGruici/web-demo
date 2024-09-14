@@ -17,7 +17,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import './assets/fonts/font.css'
-
+import moment from 'moment';
+createApp(App).config.globalProperties.$moment = moment;
+moment.locale("zh-cn");
 
 createApp(App).use(ElementPlus).use(router).use(DataVVue3).use(hljsVuePlugin ).use(Particles).mount('#app')
 

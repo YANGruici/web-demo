@@ -7,19 +7,15 @@ Vue.js 中使用这些知识点。
 
 ### 1.1 变量与数据类型
 
-#### 1.1.1 声明变量
+####  1.1.1 声明变量
 
 在 JavaScript 中，可以使用 `let`, `const`, `var` 关键字声明变量。`let` 和
-`const` 是 ES6 引入的，通常推荐使用这两者而非 `var`。
+`const` 是 ES6 引入的，通常推荐使用这两者而非 `var`,解决越域、重复声明、变量提升等问题。
 
 ```javascript
 let message = "Hello, JavaScript!"; // 可更改的变量
-const pi = 3.14; // 常量，不可更改
+const pi = 3.14; // cosnt声明常量，不可更改
 ```
-
-- `let`：声明的变量可以被重新赋值。
-- `const`：声明的变量不能被重新赋值，适用于常量。
-- `var`：用于声明变量，具有函数作用域，现今较少使用。
 
 #### 1.1.2 数据类型
 
@@ -43,6 +39,81 @@ let str = "Hello"; // string
 let bool = true; // boolean
 let arr = [1, 2, 3]; // array
 let obj = { name: "John" }; // object
+```
+#### 1.1.3 模板字符串
+ES6语法，模板字符串使用反引号定义，可以嵌入变量和表达式。使用 ${} 语法，在模板字符串中嵌入表达式或变量。
+```javascript
+const name = 'John';
+const age = 25;
+let info = `你好，我的名字是：${name}，年龄是：${age}`
+```
+#### 1.1.4 解构赋值
+ES6语法，允许从数组或对象中提取值，并赋给变量
+
+1.数组解构
+
+```javascript
+const [a, b] = [1, 2];
+console.log(a); // 1
+console.log(b); // 2
+```
+
+2 对象解构
+
+```javascript
+const person = {
+    name: "jack",
+    age: 21,
+    hobby: ['唱', '跳', 'rap']
+}
+const {name, age, hobby} = person;
+console.log(name);
+console.log(age);
+console.log(hobby);
+```
+
+#### 1.1.5扩展运算符(...)
+
+ES6语法，展开数组或对象
+
+```javascript
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5, 6];
+console.log(arr2); // [1, 2, 3, 4, 5, 6]
+```
+
+#### 1.1.6模块化
+ES6语法，使用`export`暴露方法或变量,我们可以使用`import`关键字导入模块中的函数和变量
+```javascript
+// 假设我们有一个名为 math.js 的模块
+// 导出
+export function add(a, b) {
+    return a + b;
+}
+export const PI = 3.14;
+
+// 导入
+import { add, PI } from './math.js';
+
+console.log(add(2, 3)); // 5
+console.log(PI); // 3.14
+```
+
+#### 1.1.7Promise
+Promise 是一种用于处理异步操作的对象，可以将异步操作封装成一个 Promise 对象，通过 then() 方法来添加回调函数，当异步操作完成时自动执行回调函数。
+
+```javascript
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Success!');
+    }, 1000);
+});
+
+promise.then((message) => {
+    console.log(message); // Success!
+}).catch((error) => {
+    console.error(error);
+});
 ```
 
 ### 1.2 控制结构
@@ -79,12 +150,11 @@ while (i < 5) {
 ### 1.3 函数
 
 函数是可复用的代码块，可以用来执行特定的任务或计算。
-
+#### 1.3.1 普通函数
 ```javascript
 function greet(name) {
   console.log("Hello, " + name);
 }
-
 greet("World"); // 输出: Hello, World
 ```
 
@@ -92,6 +162,19 @@ greet("World"); // 输出: Hello, World
 - **函数调用**：通过函数名后跟括号来调用函数。
 - **参数与返回值**：函数可以接受参数，并通过 `return` 语句返回值。
 
+#### 箭头函数
+
+ES6语法，简化了函数定义，不需要绑定this。需要注意  
+1.没有了`arguments`对象,使用`(...args)`代替  
+2.不能使用`new`关键字来实例化对象
+3.没有`prototype`属性
+```javascript
+const sum = (a, b) => a + b;
+// 只有一个参数
+const square = x => x * x;
+// 没有参数
+const greet = () => 'Hello, World!';
+```
 ## 2. JavaScript 进阶
 
 ### 2.1 对象与数组

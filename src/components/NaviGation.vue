@@ -13,7 +13,7 @@
         <router-link to="/react" active-class="active">React</router-link>
       </li>
       <li class="licenter">
-        <router-link to="/echarts" active-class="active">Echarts</router-link>
+        <router-link to="/echarts" active-class="active">ECharts</router-link>
       </li>
       <li class="licenter">
         <router-link to="/html" active-class="active">HTML</router-link>
@@ -39,13 +39,8 @@
       <li class="licenter">
         <router-link to="/jquery" active-class="active">JQuery</router-link>
       </li>
-      <li class="dropdown licenter" ref="dropdownTrigger">
-        <a href="https://github.com/YANGruici/web-demo" class="dropdown-toggle">
-          <svg aria-hidden="true" class="icon">
-            <use xlink:href="#icon-github"></use>
-          </svg>
-          GitHub
-        </a>
+      <li class="licenter">
+        <router-link to="/blog" active-class="active">个人博客</router-link>
       </li>
     </ul>
   </nav>
@@ -64,86 +59,64 @@ export default {
 };
 </script>
 
-<style scoped>
-nav ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+<style lang="scss" scoped>
+nav {
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-nav ul li {
-  margin: 0 10px;
-}
+    li {
+      margin: 0 10px;
 
-.licenter {
-  display: flex;
-  width: 90px;
-  justify-content: center;
-  align-items: center;
-}
+      &.licenter {
+        display: flex;
+        width: 90px;
+        justify-content: center;
+        align-items: center;
+      }
 
-nav ul li a {
-  text-decoration: none;
-  color: #000;
-  position: relative;
-  display: inline-block;
-  padding: 5px 0;
-  transition: transform 0.3s, color 0.3s;
-}
+      a {
+        text-decoration: none;
+        color: #000;
+        position: relative;
+        display: inline-block;
+        padding: 5px 0;
+        transition: transform 0.3s, color 0.3s;
 
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background: #409eff;
-  left: 0;
-  bottom: 0;
-  transition: width 0.3s;
-}
+        &::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          background: #409eff;
+          left: 0;
+          bottom: 0;
+          transition: width 0.3s;
+        }
 
-nav ul li a.active::after {
-  width: 100%;
-}
+        &.active::after {
+          width: 100%;
+        }
 
-nav ul li a:hover {
-  transform: scale(1.1);
-  color: #409eff; /* Change color on hover */
-}
+        &:hover {
+          transform: scale(1.1);
+          color: #409eff; // Change color on hover
+        }
 
-nav ul li a:active {
-  transform: rotate(-2deg);
-}
+        &:active {
+          transform: rotate(-2deg);
+        }
 
-nav ul li a.active {
-  font-weight: bold;
-  color: #409eff;
-}
-
-/* Dropdown styles */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-toggle {
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.dropdown-toggle::after {
-  border: none;
-}
-
-.icon {
-  width: 2em;
-  height: 1.5em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-  margin: 0px;
+        &.active {
+          font-weight: bold;
+          color: #409eff;
+        }
+      }
+    }
+  }
 }
 </style>
+

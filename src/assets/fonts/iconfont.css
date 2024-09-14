@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4645908 */
-  src: url('iconfont.woff2?t=1724504420947') format('woff2'),
-       url('iconfont.woff?t=1724504420947') format('woff'),
-       url('iconfont.ttf?t=1724504420947') format('truetype');
+  src: url('iconfont.woff2?t=1725874021041') format('woff2'),
+  url('iconfont.woff?t=1725874021041') format('woff'),
+  url('iconfont.ttf?t=1725874021041') format('truetype');
 }
 
 .iconfont {
@@ -13,44 +13,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-html5:before {
-  content: "\e602";
+.icon-bokexinwen:before {
+  content: "\e6fd";
 }
 
-.icon-css:before {
-  content: "\e653";
+.icon-Bootstrap:before {
+  content: "\e6d4";
 }
 
-.icon-jquery:before {
-  content: "\e655";
+.icon-html:before {
+  content: "\e633";
 }
 
-.icon-bootstrap:before {
-  content: "\e683";
+.icon-icon-15:before {
+  content: "\e603";
 }
 
-.icon-xiaochengxu:before {
-  content: "\e63e";
-}
-
-.icon-react:before {
-  content: "\e68b";
-}
-
-.icon-vue:before {
-  content: "\e69a";
-}
-
-.icon-javascript:before {
-  content: "\e6f7";
-}
-
-.icon-echarts:before {
-  content: "\e63f";
-}
-
-.icon-tiaozhuanfast:before {
-  content: "\e7ce";
+.icon-folder_type_typescript_opened:before {
+  content: "\e740";
 }
 
 .icon-github:before {
@@ -59,6 +39,30 @@
 
 .icon--startup:before {
   content: "\e623";
+}
+
+.icon-Vue:before {
+  content: "\e799";
+}
+
+.icon-React:before {
+  content: "\e79a";
+}
+
+.icon-jQuery:before {
+  content: "\e79b";
+}
+
+.icon-css:before {
+  content: "\e61e";
+}
+
+.icon-JavaScript:before {
+  content: "\e611";
+}
+
+.icon-ECharts:before {
+  content: "\e928";
 }
 
 .icon-histogram:before {

@@ -7,24 +7,20 @@ Vue.js 是一个用于构建用户界面的渐进式 JavaScript 框架。与其�
 
 ## Vue实例
 
-### 介绍
-
 Vue实例是Vue的核心，所有的Vue应用都是通过创建一个Vue实例开始的。每一个Vue应用都是通过
 `new Vue` 创建一个根实例启动的，并且会将该实例挂载到一个DOM元素上。
 
-### 代码示例
-
-```vue
+```javascript
 <template>
   <div id="app">
-    {{ message }}
+    {{message}}
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      message: 'Hello Vue!'
+  export default {
+  data(){ 
+  return {
+  message: 'Hello Vue!'
     };
   }
 };
@@ -38,23 +34,20 @@ export default {
 
 ## 模板语法
 
-### 介绍
-
 Vue使用基于HTML的模板语法，允许开发者声明式地将DOM绑定至Vue实例的数据。所有Vue.js的模板都是合法的HTML，因此可以被浏览器和HTML解析器解析。
 
-### 代码示例
-
-```vue
+```javascript
 <template>
   <div id="app">
-    <p>{{ message }}</p>
-    <p :title="message">
-      鼠标悬停几秒钟查看此消息。
-    </p>
-  </div>
+    <p>{{message}}</p>
+    <p
+    :title="message">
+    鼠标悬停几秒钟查看此消息。
+  </p>
+</div>
 </template>
 <script>
-export default {
+  export default {
   data() {
     return {
       message: 'Hello Vue.js!'
@@ -71,11 +64,7 @@ export default {
 
 ## 计算属性和侦听器
 
-### 介绍
-
 计算属性是基于依赖进行缓存的，只有依赖发生改变，才会重新计算。而侦听器用于响应数据的变化。
-
-### 代码示例
 
 ```vue
 <template>
@@ -107,11 +96,7 @@ export default {
 
 ## Class与Style绑定
 
-### 介绍
-
 Vue允许你以简洁的语法动态绑定HTML class和style。
-
-### 代码示例
 
 ```vue
 <template>
@@ -140,11 +125,7 @@ export default {
 
 ## 条件渲染
 
-### 介绍
-
 Vue.js 通过 `v-if`, `v-else`, `v-else-if` 来实现条件渲染。
-
-### 代码示例
 
 ```vue
 <div id="app">
@@ -168,11 +149,7 @@ Vue.js 通过 `v-if`, `v-else`, `v-else-if` 来实现条件渲染。
 
 ## 列表渲染
 
-### 介绍
-
 使用 `v-for` 指令可以基于一个数组来渲染一个列表。
-
-### 代码示例
 
 ```vue
 <template>
@@ -205,11 +182,7 @@ export default {
 
 ## 事件处理
 
-### 介绍
-
 使用 `v-on` 指令可以监听DOM事件，并在事件触发时执行一些JavaScript代码。
-
-### 代码示例
 
 ```vue
 <template>
@@ -239,11 +212,7 @@ export default {
 
 ## 表单输入绑定
 
-### 介绍
-
 `v-model` 指令用于在表单控件元素上创建双向数据绑定。
-
-### 代码示例
 
 ```vue
 <template>
@@ -269,11 +238,7 @@ export default {
 
 ## 组件基础
 
-### 介绍
-
 组件是Vue.js最强大的功能之一。组件扩展了HTML元素，封装了可重用的代码片段。
-
-### 代码示例
 
 ```vue
 <template>
@@ -298,11 +263,7 @@ export default {
 
 ## 组件间通信
 
-### 介绍
-
 组件间的通信可以通过 `props` 和 `events` 实现。
-
-### 代码示例
 
 ```vue
 <template>
@@ -333,11 +294,7 @@ export default {
 
 ## 插槽
 
-### 介绍
-
 插槽允许你像实现HTML元素那样使用组件，可以在使用组件时动态地插入内容。
-
-### 代码示例
 
 ```vue
 <template>
@@ -364,11 +321,7 @@ export default {
 
 ## 动态组件与异步组件
 
-### 介绍
-
 动态组件允许在同一个挂载点动态切换多个组件。异步组件是当组件实际需要时才进行加载。
-
-### 代码示例
 
 ```vue
 <template>
@@ -446,11 +399,7 @@ export default {
 
 ## Vue Router 路由
 
-### 介绍
-
 Vue Router 是 Vue.js 官方的路由管理器，用于创建单页面应用 (SPA)。
-
-### 代码示例
 
 ```vue
 <template>
@@ -487,12 +436,8 @@ export default {
 
 ## Vuex 状态管理
 
-### 介绍
-
 Vuex 是一个专为 Vue.js
 应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
-
-### 代码示例
 
 ```vue
 <template>
@@ -537,11 +482,7 @@ export default {
 
 ## Vue3 新特性
 
-### 介绍
-
 Vue 3 相比 Vue 2 引入了多个新特性，如组合式API、性能提升、Fragment、Teleport等。
-
-### 代码示例
 
 ```vue
 <template>
@@ -571,3 +512,139 @@ export default {
 - `setup()`: 是组合式API的入口，可以在其中使用Vue3的新特性如 `ref`。
 - `ref`: 用于创建响应式的数据对象。
 
+## axios
+
+基于 promise 的网络请求库,[axios中文文档](https://www.axios-http.cn/)
+
+### 安装/引用
+
+```bash
+npm install axios
+```
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+```
+
+### axios具体用法
+`import axios from 'axios'`
+- get：获取数据，请求指定的信息，返回实体对象
+- post：向指定资源提交数据（例如表单提交或文件上传）
+- put：更新数据，从客户端向服务器传送的数据取代指定的文档的内容
+- patch：更新数据，是对put方法的补充，用来对已知资源进行局部更新
+- delete：请求服务器删除指定的数据
+- head：获取报文首部
+
+基本配置
+```javascript
+<script>
+  {
+    // `url` 是用于请求的服务器 URL
+    url: '/user',
+    // `method` 是创建请求时使用的方法
+    method: 'get',// 默认值
+    // `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
+    // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL。
+    baseURL: 'https://some-domain.com/api/',
+    // 自定义请求头
+    headers: {'X-Requested-With': 'XMLHttpRequest'},
+    // `timeout` 指定请求超时的毫秒数。
+    // 如果请求时间超过 `timeout` 的值，则请求会被中断
+    timeout: 1000,     
+  }
+</script>
+```
+
+基本用法
+
+```javascript
+async function getUser() {
+  try {
+    const response = await axios.get('/user?ID=12345');
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+
+### 封装axios
+
+```javascript
+import axios from 'axios';
+
+// 创建axios实例
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // api的base_url
+  timeout: 5000 // 请求超时时间
+});
+
+// 请求拦截器
+service.interceptors.request.use(
+        config => {
+          // 可以在这里添加请求头等信息
+          // 例如：config.headers['Authorization'] = 'Bearer your-token';
+          return config;
+        },
+        error => {
+          // 请求错误处理
+          console.log(error); // for debug
+          Promise.reject(error);
+        }
+);
+
+// 响应拦截器
+service.interceptors.response.use(
+        response => {
+          // 对响应数据做处理，例如只返回data部分
+          const res = response.data;
+          // 如果返回的状态码为200，说明成功，可以直接返回数据
+          if (res.code === 200) {
+            return res.data;
+          } else {
+            // 其他状态码都当作错误处理
+            // 可以在这里对不同的错误码进行不同处理
+            return Promise.reject({
+              message: res.message || 'Error',
+              status: res.code
+            });
+          }
+        },
+        error => {
+          // 对响应错误做处理
+          console.log('err' + error); // for debug
+          return Promise.reject(error);
+        }
+);
+
+const http = {
+  get: request.bind(null, 'get'),
+  post: request.bind(null, 'post'),
+  put: request.bind(null, 'put'),
+  patch: request.bind(null, 'patch'),
+  delete: request.bind(null, 'delete'),
+  cancel: cancelRequest
+}
+
+export default http
+
+// 封装 请求
+ 
+function request(method, url, params = {}, options = {}, headers = {}) {}
+```
+
+封装使用
+```javascript
+//http.js
+import http from ''
+
+export const baseAPI = {
+  getData: params => http.post(`/relationship/Data`, params), 
+
+}
+//example.vue
+import {baseAPI} from '../http.js'
+//传入参数进行操作
+baseAPI.getTreeData(params).then(res=>{
+})
+```

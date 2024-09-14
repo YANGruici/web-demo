@@ -1,7 +1,7 @@
 import hljs from 'highlight.js/lib/core';
 
 // 定义 Bootstrap 语言
-hljs.registerLanguage('bootstrap', function() {
+hljs.registerLanguage('bootstrap', function(hljs) {
     return {
         name: 'Bootstrap',
         case_insensitive: true,

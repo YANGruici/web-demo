@@ -12,7 +12,7 @@ ECharts 的各种图表类型，并提供相应的 Vue.js
 柱状图是最常见的图表类型之一，通常用于比较不同类别的值。以下是一个基础柱状图的 Vue
 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="bar-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -53,7 +53,7 @@ export default {
 
 堆叠柱状图用于显示各个部分的总和与组成部分的对比。以下是堆叠柱状图的 Vue 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="stacked-bar-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -127,7 +127,7 @@ export default {
 
 折线图用于显示数据的趋势，尤其是时间序列数据。以下是一个基础折线图的 Vue 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="line-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -175,7 +175,7 @@ export default {
 在某些情况下，使用柱状图和折线图结合显示数据，可以更直观地展示不同维度的数据对比。以下是柱状图和折线图结合的
 Vue 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="bar-line-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -239,7 +239,7 @@ export default {
 饼图用于显示各部分占总数的比例，通常用于简单的组成部分分析。以下是一个基础饼图的 Vue
 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="pie-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -287,7 +287,7 @@ export default {
 ECharts 提供了对地理数据的强大支持，能够轻松绘制各种地图。以下是一个基础地图的 Vue
 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="map-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -348,7 +348,7 @@ export default {
 仪表盘用于显示关键指标的进度或当前状态，通常用于监控系统。以下是一个基础仪表盘的 Vue
 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="gauge-chart" style="width: 600px; height: 400px;"></div>
 </template>
@@ -386,7 +386,7 @@ export default {
 时间轴图表用于展示时间序列数据的演变情况，适合用于展示数据变化趋势。以下是一个简单时间轴的
 Vue 代码示例：
 
-```Echarts
+```javascript
 <template>
   <div id="timeline-chart" style="width: 600px; height: 400px;"></div>
 </template>

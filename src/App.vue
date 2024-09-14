@@ -19,7 +19,7 @@
     </div>
     <div v-if="showContent" class="main-content">
       <!-- 导航栏 -->
-      <Navigation />
+      <!--      <Navigation />-->
       <!-- 路由展示页面 -->
       <router-view></router-view>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Navigation from './components/NaviGation.vue'
+// import Navigation from '@/components/NaviGation'
 import 'animate.css';
 import { particles } from '@/assets/js/particles.js'
 
@@ -42,7 +42,7 @@ export default {
     };
   },
   components: {
-    Navigation
+    // Navigation
   },
   methods: {
     show() {
@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .app-container {
   display: flex;
   flex-direction: column;

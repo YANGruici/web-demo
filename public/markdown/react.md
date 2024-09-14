@@ -17,7 +17,7 @@ React 依赖于 Node.js 和 npm（Node 包管理器），因此首先需要安�
 
 使用 `create-react-app` 工具可以快速创建一个 React 项目。
 
-```
+```bash
 npx create-react-app my-app
 cd my-app
 npm start
@@ -35,7 +35,7 @@ npm start
 
 **代码示例：**
 
-```react
+```javascript
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
@@ -55,7 +55,7 @@ JSX 是 JavaScript 的一种语法扩展，用于描述 UI 结构。JSX 允许�
 
 **代码示例：**
 
-```react
+```javascript
 const element = <h1>Hello, world!</h1>;
 
 // 等同于
@@ -70,7 +70,7 @@ Props 是 React 组件的输入参数，用于在组件间传递数据。组件�
 
 **代码示例：**
 
-```react
+```javascript
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
@@ -87,7 +87,7 @@ State 是 React 组件的内部状态，用于记录组件的数据变化。Stat
 
 **代码示例：**
 
-```react
+```javascript
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -127,7 +127,7 @@ React 使用驼峰式命名约定来定义事件处理程序，而不是传统�
 
 **代码示例：**
 
-```react
+```javascript
 function ActionLink() {
   function handleClick(e) {
     e.preventDefault();
@@ -149,7 +149,7 @@ React 允许通过条件判断来动态渲染不同的组件或元素。可以�
 
 **代码示例：**
 
-```react
+```javascript
 function Greeting(props) {
   const isLoggedIn = props.isLoggedIn;
   if (isLoggedIn) {
@@ -179,7 +179,7 @@ function Mailbox(props) {
 
 **代码示例：**
 
-```react
+```javascript
 function NumberList(props) {
   const numbers = props.numbers;
   const listItems = numbers.map((number) =>
@@ -200,7 +200,7 @@ function NumberList(props) {
 
 **代码示例：**
 
-```react
+```javascript
 import React, { useState } from 'react';
 
 function Example() {
@@ -225,7 +225,7 @@ function Example() {
 
 **代码示例：**
 
-```react
+```javascript
 import React, { useEffect, useState } from 'react';
 function Example() {
   const [count, setCount] = useState(0);
@@ -253,7 +253,7 @@ function Example() {
 
 **代码示例：**
 
-```react
+```javascript
 const ThemeContext = React.createContext('light');
 
 function App() {
@@ -286,7 +286,7 @@ function ThemedButton() {
 
 **代码示例：**
 
-```react
+```javascript
 import React, { useReducer } from 'react';
 
 function reducer(state, action) {
@@ -327,7 +327,7 @@ npm install react-router-dom
 
 **代码示例：**
 
-```react
+```javascript
 import {
   BrowserRouter as Router,
   Switch,
@@ -380,7 +380,7 @@ Context API 允许在整个组件树中共享状态而不必显式地通过 prop
 
 **代码示例：**
 
-```react
+```javascript
 const UserContext = React.createContext();
 
 function App() {
@@ -420,13 +420,13 @@ action 来驱动状态变更。Redux 与 React 结合使用时，通常还会使
 
 **安装 Redux：**
 
-```
+```bash
 npm install redux react-redux
 ```
 
 **代码示例：**
 
-```react
+```javascript
 import { createStore } from 'redux';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 
@@ -478,7 +478,7 @@ function App() {
 
 **代码示例：**
 
-```react
+```javascript
 class MyComponent extends React.PureComponent {
   render() {
     return <div>{this.props.value}</div>;
@@ -494,7 +494,7 @@ class MyComponent extends React.PureComponent {
 
 **代码示例：**
 
-```react
+```javascript
 const MyComponent = React.memo(function MyComponent(props) {
   return <div>{props.value}</div>;
 });
@@ -509,7 +509,7 @@ const MyComponent = React.memo(function MyComponent(props) {
 
 **代码示例：**
 
-```react
+```javascript
 const OtherComponent = React.lazy(() => import('./OtherComponent'));
 
 function MyComponent() {
@@ -533,7 +533,7 @@ Fetch API 是原生的浏览器 API，用于发起 HTTP 请求。它返回一个
 
 **代码示例：**
 
-```react
+```javascript
 useEffect(() => {
   fetch('https://api.example.com/data')
     .then(response => response.json())
@@ -550,13 +550,13 @@ Axios 是一个基于 Promise 的 HTTP 客户端，支持更强大的功能，�
 
 **安装 Axios：**
 
-```
+```bash
 npm install axios
 ```
 
 **代码示例：**
 
-```react
+```javascript
 import axios from 'axios';
 
 useEffect(() => {
@@ -576,13 +576,13 @@ Jest 是一个流行的 JavaScript 测试框架，广泛用于 React
 
 **安装 Jest：**
 
-```
+```bash
 npm install --save-dev jest
 ```
 
 **代码示例：**
 
-```react
+```javascript
 test('adds 1 + 2 to equal 3', () => {
   expect(1 + 2).toBe(3);
 });
@@ -596,13 +596,13 @@ Library 通常与 Jest 一起使用，可以模拟用户的交互，验证组件
 
 **安装 React Testing Library：**
 
-```
+```bash
 npm install --save-dev @testing-library/react
 ```
 
 **代码示例：**
 
-```react
+```javascript
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
