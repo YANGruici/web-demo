@@ -388,8 +388,9 @@
 **示例:**
 
 ```html
+
 <figure>
-  <img src="./img/img.png" alt="示例图片">
+  <img src="imges/img.png" alt="示例图片">
   <figcaption>这是图片的标题。</figcaption>
 </figure>
 ```
@@ -401,8 +402,9 @@
 **示例:**
 
 ```html
+
 <figure>
-  <img src="./img/img.png" alt="示例图片">
+  <img src="imges/img.png" alt="示例图片">
   <figcaption>这是图片的标题。</figcaption>
 </figure>
 ```
@@ -684,7 +686,7 @@
 **示例:**
 
 ```html
-<img src="./img/img.png" alt="示例图片" width="500" height="600">
+<img src="imges/img.png" alt="示例图片" width="500" height="600">
 ```
 
 #### 53. `<iframe>`
@@ -829,10 +831,11 @@
 **示例:**
 
 ```html
+
 <picture>
-  <source srcset="./img/img.webp" type="image/webp">
-  <source srcset="./img/img.jpg" type="image/jpeg">
-  <img src="./img/img.png" alt="示例图像">
+  <source srcset="imges/img.webp" type="image/webp">
+  <source srcset="imges/img.jpg" type="image/jpeg">
+  <img src="imges/img.png" alt="示例图像">
 </picture>
 ```
 
