@@ -25,13 +25,12 @@
 
 先要拥有github的账号，创建一个仓库。
 - 1.前端项目代码上传前端代码到仓库。
-- 2.要部署的前端仓库创建一个新分支，最好取名gh-pages.
-- 3..gitignore文件中的dist文件注释掉。
-- 4.运行npm run build
-- 5.上传里的文件到main分支
-- 6.`git subtree push --prefix dist origin gh-pages`，创建新分支用于部署
-- 7.进入仓库的Setting,选择pages，[![pAn5LCD.png](https://s21.ax1x.com/2024/09/13/pAn5LCD.png)](https://imgse.com/i/pAn5LCD)
-- 8.[![pAnIuV0.png](https://s21.ax1x.com/2024/09/13/pAnIuV0.png)](https://imgse.com/i/pAnIuV0)
+- 2..gitignore文件中的dist文件注释掉。
+- 3.运行npm run build
+- 4.上传里的文件到main分支
+- 5.`git subtree push --prefix dist origin gh-pages`，创建新分支用于部署
+- 6.进入仓库的Setting,选择pages，[![pAn5LCD.png](https://s21.ax1x.com/2024/09/13/pAn5LCD.png)](https://imgse.com/i/pAn5LCD)
+- 87.[![pAnIuV0.png](https://s21.ax1x.com/2024/09/13/pAnIuV0.png)](https://imgse.com/i/pAnIuV0)
   Branch选择gh-pages分支，等待出现链接就可以了。
 ## moment.js
 
