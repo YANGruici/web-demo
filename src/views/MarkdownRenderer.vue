@@ -1,6 +1,7 @@
 <template>
-  <Navigation />
-  <div class="markdown-renderer">
+  <Navigation/>
+  <SpinnerLoader :loading="loading"/>
+  <div v-if="!loading" class="markdown-renderer">
     <div class="sidebar">
       <ul class="menu-list">
         <li v-for="(menuItem, index) in menuItems" :key="index">
@@ -39,26 +40,27 @@
         </li>
       </ul>
     </div>
-    <div class="content" ref="content" @scroll="onScroll">
+    <div ref="content" class="content" @scroll="onScroll">
       <div
-          v-html="content"
           class="markdown-body"
           @click="handleCopyButtonClick"
+          v-html="content"
       ></div>
     </div>
   </div>
 </template>
 
 <script>
-import { fetchMarkdown } from '@/utils/markdown';
-import { marked } from 'marked';
+import {fetchMarkdown} from '@/utils/markdown';
+import {marked} from 'marked';
 import hljs from 'highlight.js';
-import { ElMessage } from 'element-plus';
+import {ElMessage} from 'element-plus';
 import Navigation from '@/components/NaviGation'
+import SpinnerLoader from "@/components/SpinnerLoader";
 
 export default {
   name: 'MarkdownRenderer',
-  components: { Navigation },
+  components: {SpinnerLoader, Navigation},
 
   data() {
     return {
@@ -68,20 +70,24 @@ export default {
       observer: null,
       disableScrollEvent: false,
       scrollTimeout: null,
+      loading: true,
     };
   },
   async created() {
     await this.loadMarkdown();
+    this.loading = false;
   },
   watch: {
     '$route.params.markdownFile': 'loadMarkdown',
   },
   methods: {
     async loadMarkdown() {
+      this.loading = true;
       const markdownContent = await fetchMarkdown(
           this.$route.params.markdownFile + '.md'
       );
       this.parseMarkdown(markdownContent);
+      this.loading = false;
       this.$nextTick(() => {
         this.initializeObserver();
         this.activateTopLevelMenu();
@@ -127,13 +133,13 @@ export default {
         const id = `${heading.tagName}-${heading.textContent.trim().toLowerCase().replace(/\s+/g, '-')}-${index}`;
         heading.id = id;
         if (heading.tagName === 'H1') {
-          currentH1 = { id, title: heading.textContent, subItems: [] };
+          currentH1 = {id, title: heading.textContent, subItems: []};
           menuItems.push(currentH1);
         } else if (heading.tagName === 'H2' && currentH1) {
-          currentH2 = { id, title: heading.textContent, subItems: [] };
+          currentH2 = {id, title: heading.textContent, subItems: []};
           currentH1.subItems.push(currentH2);
         } else if (heading.tagName === 'H3' && currentH2) {
-          currentH2.subItems.push({ id, title: heading.textContent });
+          currentH2.subItems.push({id, title: heading.textContent});
         }
       });
       this.menuItems = menuItems;
@@ -148,7 +154,7 @@ export default {
         this.disableScrollEvent = true;
         const contentElement = this.$refs.content;
         const topOffset = element.offsetTop - contentElement.offsetTop;
-        contentElement.scrollTo({ top: topOffset, behavior: 'auto' }); // Change scrollIntoView to scrollTo for better control
+        contentElement.scrollTo({top: topOffset, behavior: 'auto'}); // Change scrollIntoView to scrollTo for better control
         this.setActiveMenu(index);
         if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
         this.scrollTimeout = setTimeout(() => {
@@ -197,8 +203,8 @@ export default {
       const headings = Array.from(document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3'));
       const closestHeading = headings.reduce((closest, heading) => {
         const headingOffset = Math.abs(heading.offsetTop - scrollTop);
-        return headingOffset < closest.offset ? { heading, offset: headingOffset } : closest;
-      }, { heading: null, offset: Infinity });
+        return headingOffset < closest.offset ? {heading, offset: headingOffset} : closest;
+      }, {heading: null, offset: Infinity});
       if (closestHeading.heading) {
         this.setActiveMenu(this.getMenuIndexById(closestHeading.heading.id));
       }
@@ -241,7 +247,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .markdown-renderer {
   display: flex;
   height: 100vh;
@@ -275,7 +281,7 @@ export default {
       border-radius: 6px;
       position: relative;
       border-left: 4px solid transparent;
-      text-decoration: none;  // Add this line to remove underline
+      text-decoration: none; // Add this line to remove underline
 
       &:hover {
         background-color: #409EFF;
@@ -298,7 +304,7 @@ export default {
         transition: background-color 0.3s;
         border-radius: 4px;
         border-left: 4px solid transparent;
-        text-decoration: none;  // Add this line to remove underline
+        text-decoration: none; // Add this line to remove underline
 
         &:hover {
           background-color: #53a8ff;
@@ -321,7 +327,7 @@ export default {
           transition: background-color 0.3s;
           border-radius: 4px;
           border-left: 4px solid transparent;
-          text-decoration: none;  // Add this line to remove underline
+          text-decoration: none; // Add this line to remove underline
 
           &:hover {
             background-color: #69b0ff;

@@ -1,33 +1,38 @@
 <template>
   <div class="app-container">
-    <div v-if="showHeader" class="header">
-      <div class="animated-text animate__animated animate__rubberBand">
-        <Particles id="tsparticles" :options="particles" />
-        <div class="text-container">
-          <span>A journey of a thousand miles begins with a single step.</span>
-        </div>
-        <button @click="show" class="show-content-button">
-          <svg aria-hidden="true" class="icon"><use xlink:href="#icon--startup"></use></svg>Start
-        </button>
-        <div class="illustration">
-          <img :src="img" />
-          <div class="credit">
-            Illustration by <a href="https://icons8.com/illustrations/author/N3YOxdn12Kox">Marina Mogulska</a> from <a href="https://icons8.com/illustrations">Ouch!</a>
+    <SpinnerLoader :loading="loading" />
+
+    <div v-if="!loading">
+      <div v-if="showHeader" class="header">
+        <div class="animated-text animate__animated animate__rubberBand">
+          <Particles id="tsparticles" :options="particles" />
+          <div class="text-container">
+            <span>A journey of a thousand miles begins with a single step.</span>
+          </div>
+          <button @click="show" class="show-content-button">
+            <svg aria-hidden="true" class="icon">
+              <use xlink:href="#icon--startup"></use>
+            </svg>
+            Start
+          </button>
+          <div class="illustration">
+            <img :src="img" />
+            <div class="credit">
+              Illustration by <a href="https://icons8.com/illustrations/author/N3YOxdn12Kox">Marina Mogulska</a>
+              from <a href="https://icons8.com/illustrations">Ouch!</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-if="showContent" class="main-content">
-      <!-- 导航栏 -->
-      <!--      <Navigation />-->
-      <!-- 路由展示页面 -->
-      <router-view></router-view>
+      <div v-if="showContent" class="main-content">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import Navigation from '@/components/NaviGation'
+import SpinnerLoader from '@/components/SpinnerLoader';
 import 'animate.css';
 import { particles } from '@/assets/js/particles.js'
 
@@ -38,21 +43,28 @@ export default {
       img: require('@/assets/image/memphis-web-design-with-the-word-create.gif'),
       particles: particles,
       showHeader: true,
-      showContent: false
+      showContent: false,
+      loading: true
     };
   },
   components: {
-    // Navigation
+    SpinnerLoader
   },
   methods: {
     show() {
       this.showHeader = false;
       this.showContent = true;
+    },
+    hideLoader() {
+      this.loading = false;
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.hideLoader();});
   }
 }
 </script>
-
 <style scoped lang="scss">
 .app-container {
   display: flex;
