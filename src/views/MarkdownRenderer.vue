@@ -39,7 +39,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { fetchMarkdown } from '@/utils/markdown';
 import { marked } from 'marked';
@@ -109,16 +108,19 @@ export default {
       button.style.position = 'absolute';
       button.style.top = '10px';
       button.style.right = '10px';
-
-      const languageClass = block.className.match(/language-([a-zA-Z0-9_-]+)/);
-      const languageName = languageClass ? languageClass[1] : 'unknown';
-      const languageLabel = document.createElement('div');
-      languageLabel.textContent = languageName;
-      languageLabel.className = 'code-language-label';
+      button.style.opacity = '0';
+      button.style.transition = 'opacity 0.3s';
 
       pre.style.position = 'relative';
-      pre.insertBefore(languageLabel, block);
       pre.appendChild(button);
+
+      // Show button on hover
+      pre.addEventListener('mouseover', () => {
+        button.style.opacity = '1';
+      });
+      pre.addEventListener('mouseout', () => {
+        button.style.opacity = '0';
+      });
     },
 
     generateMenu(htmlContent) {
@@ -263,7 +265,6 @@ export default {
   },
 };
 </script>
-
 <style lang="scss" scoped>
 .markdown-renderer {
   display: flex;
@@ -383,8 +384,8 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-:deep(pre)  {
-  position: relative;
+:deep(pre) {
+  position: relative; /* 使按钮相对于 pre 定位 */
   background-color: #1e1e1e;
   padding: 16px;
   border-radius: 10px;
@@ -392,6 +393,10 @@ export default {
   color: #dcdcdc;
   font-size: 14px;
   font-family: 'Fira Code', monospace;
+
+  &:hover button {
+    opacity: 1; /* 鼠标悬停时显示按钮 */
+  }
 
   button {
     background-color: #007acc;
@@ -401,26 +406,20 @@ export default {
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, opacity 0.3s;
     position: absolute;
     top: 10px;
     right: 10px;
+    opacity: 0; /* 默认不可见 */
+  }
 
-    &:hover {
-      background-color: #005f9e;
-    }
+  &:hover {
+    background-color: #333; /* 代码块变暗，可以忽略 */
   }
 }
 
-:deep(.code-language-label) {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: #007acc;
-  color: white;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
+:deep(.copy-button) {
+  opacity: 0; /* 按钮初始状态下不可见 */
+  transition: opacity 0.3s; /* 鼠标悬停时过渡显示 */
 }
 </style>
