@@ -33,6 +33,14 @@
       </router-link>
     </div>
     <div class="nav-item">
+      <router-link to="/echartscss">
+        <svg aria-hidden="true" class="icon">
+          <use xlink:href="#icon-ECharts"></use>
+        </svg>
+        <span>图表美化</span>
+      </router-link>
+    </div>
+    <div class="nav-item">
       <router-link to="/html">
         <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-html"></use>
@@ -109,7 +117,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:100px;
+    margin:95px;
 
     svg.icon {
       margin-bottom: 8px;

@@ -1,6 +1,6 @@
 <template>
-  <Navigation/>
-  <SpinnerLoader :loading="loading"/>
+  <Navigation />
+  <SpinnerLoader :loading="loading" />
   <div v-if="!loading" class="markdown-renderer">
     <div class="sidebar">
       <ul class="menu-list">
@@ -11,7 +11,7 @@
           >
             {{ menuItem.title }}
           </a>
-          <ul v-if="menuItem.subItems && menuItem.subItems.length">
+          <ul v-if="menuItem.subItems?.length">
             <li v-for="(subItem, subIndex) in menuItem.subItems" :key="subIndex">
               <a
                   :class="{ active: activeItemIndex === `${index}-${subIndex}` }"
@@ -19,17 +19,11 @@
               >
                 {{ subItem.title }}
               </a>
-              <ul v-if="subItem.subItems && subItem.subItems.length">
-                <li
-                    v-for="(subSubItem, subSubIndex) in subItem.subItems"
-                    :key="subSubIndex"
-                >
+              <ul v-if="subItem.subItems?.length">
+                <li v-for="(subSubItem, subSubIndex) in subItem.subItems" :key="subSubIndex">
                   <a
                       :class="{ active: activeItemIndex === `${index}-${subIndex}-${subSubIndex}` }"
-                      @click="handleMenuClick(
-                      subSubItem.id,
-                      `${index}-${subIndex}-${subSubIndex}`
-                    )"
+                      @click="handleMenuClick(subSubItem.id, `${index}-${subIndex}-${subSubIndex}`)"
                   >
                     {{ subSubItem.title }}
                   </a>
@@ -41,26 +35,22 @@
       </ul>
     </div>
     <div ref="content" class="content" @scroll="onScroll">
-      <div
-          class="markdown-body"
-          @click="handleCopyButtonClick"
-          v-html="content"
-      ></div>
+      <div class="markdown-body" @click="handleCopyButtonClick" v-html="content"></div>
     </div>
   </div>
 </template>
 
 <script>
-import {fetchMarkdown} from '@/utils/markdown';
-import {marked} from 'marked';
+import { fetchMarkdown } from '@/utils/markdown';
+import { marked } from 'marked';
 import hljs from 'highlight.js';
-import {ElMessage} from 'element-plus';
-import Navigation from '@/components/NaviGation'
+import { ElMessage } from 'element-plus';
+import Navigation from '@/components/NaviGation';
 import SpinnerLoader from "@/components/SpinnerLoader";
 
 export default {
   name: 'MarkdownRenderer',
-  components: {SpinnerLoader, Navigation},
+  components: { SpinnerLoader, Navigation },
 
   data() {
     return {
@@ -73,19 +63,20 @@ export default {
       loading: true,
     };
   },
+
   async created() {
     await this.loadMarkdown();
     this.loading = false;
   },
+
   watch: {
     '$route.params.markdownFile': 'loadMarkdown',
   },
+
   methods: {
     async loadMarkdown() {
       this.loading = true;
-      const markdownContent = await fetchMarkdown(
-          this.$route.params.markdownFile + '.md'
-      );
+      const markdownContent = await fetchMarkdown(`${this.$route.params.markdownFile}.md`);
       this.parseMarkdown(markdownContent);
       this.loading = false;
       this.$nextTick(() => {
@@ -93,101 +84,119 @@ export default {
         this.activateTopLevelMenu();
       });
     },
+
     parseMarkdown(markdownContent) {
       const parser = new DOMParser();
-      const htmlContent = parser.parseFromString(
-          marked(markdownContent),
-          'text/html'
-      );
+      const htmlContent = parser.parseFromString(marked(markdownContent), 'text/html');
       this.generateMenu(htmlContent);
-      const codeBlocks = htmlContent.querySelectorAll('pre code');
-      codeBlocks.forEach((block) => {
+
+      htmlContent.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightElement(block);
-        const pre = block.parentElement;
-        if (pre) {
-          const button = document.createElement('button');
-          button.textContent = 'Copy';
-          button.className = 'copy-button';
-          button.dataset.code = block.textContent;
-          button.style.position = 'absolute';
-          button.style.top = '10px';
-          button.style.right = '10px';
-          const languageClass = block.className.match(/language-([a-zA-Z0-9_-]+)/);
-          const languageName = languageClass ? languageClass[1] : 'unknown';
-          const languageLabel = document.createElement('div');
-          languageLabel.textContent = languageName;
-          languageLabel.className = 'code-language-label';
-          pre.style.position = 'relative';
-          pre.insertBefore(languageLabel, block);
-          pre.appendChild(button);
-        }
+        this.addCopyButton(block);
       });
+
       this.content = htmlContent.body.innerHTML;
     },
+
+    addCopyButton(block) {
+      const pre = block.parentElement;
+      if (!pre) return;
+
+      const button = document.createElement('button');
+      button.textContent = 'Copy';
+      button.className = 'copy-button';
+      button.dataset.code = block.textContent;
+      button.style.position = 'absolute';
+      button.style.top = '10px';
+      button.style.right = '10px';
+
+      const languageClass = block.className.match(/language-([a-zA-Z0-9_-]+)/);
+      const languageName = languageClass ? languageClass[1] : 'unknown';
+      const languageLabel = document.createElement('div');
+      languageLabel.textContent = languageName;
+      languageLabel.className = 'code-language-label';
+
+      pre.style.position = 'relative';
+      pre.insertBefore(languageLabel, block);
+      pre.appendChild(button);
+    },
+
     generateMenu(htmlContent) {
       const menuItems = [];
-      const headings = htmlContent.querySelectorAll('h1, h2, h3');
       let currentH1 = null;
       let currentH2 = null;
-      headings.forEach((heading, index) => {
+
+      htmlContent.querySelectorAll('h1, h2, h3').forEach((heading, index) => {
         const id = `${heading.tagName}-${heading.textContent.trim().toLowerCase().replace(/\s+/g, '-')}-${index}`;
         heading.id = id;
+
         if (heading.tagName === 'H1') {
-          currentH1 = {id, title: heading.textContent, subItems: []};
+          currentH1 = { id, title: heading.textContent, subItems: [] };
           menuItems.push(currentH1);
         } else if (heading.tagName === 'H2' && currentH1) {
-          currentH2 = {id, title: heading.textContent, subItems: []};
+          currentH2 = { id, title: heading.textContent, subItems: [] };
           currentH1.subItems.push(currentH2);
         } else if (heading.tagName === 'H3' && currentH2) {
-          currentH2.subItems.push({id, title: heading.textContent});
+          currentH2.subItems.push({ id, title: heading.textContent });
         }
       });
+
       this.menuItems = menuItems;
     },
+
     handleMenuClick(id, index) {
       this.scrollTo(id, index);
     },
+
     scrollTo(id, index) {
-      if (this.observer) this.observer.disconnect(); // Properly disconnect observer
+      if (this.observer) this.observer.disconnect();
       const element = document.getElementById(id);
-      if (element) {
-        this.disableScrollEvent = true;
-        const contentElement = this.$refs.content;
-        const topOffset = element.offsetTop - contentElement.offsetTop;
-        contentElement.scrollTo({top: topOffset, behavior: 'auto'}); // Change scrollIntoView to scrollTo for better control
-        this.setActiveMenu(index);
-        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = setTimeout(() => {
-          this.disableScrollEvent = false;
-          this.initializeObserver(); // Reinitialize observer
-        }, 300);
-      }
+      if (!element) return;
+
+      this.disableScrollEvent = true;
+      const contentElement = this.$refs.content;
+      const topOffset = element.offsetTop - contentElement.offsetTop;
+      contentElement.scrollTo({ top: topOffset, behavior: 'auto' });
+
       this.setActiveMenu(index);
+      clearTimeout(this.scrollTimeout);
+      this.scrollTimeout = setTimeout(() => {
+        this.disableScrollEvent = false;
+        this.initializeObserver();
+      }, 300);
     },
+
     setActiveMenu(index) {
       this.activeItemIndex = index;
     },
+
     activateTopLevelMenu() {
       if (this.menuItems.length > 0) {
         this.activeItemIndex = '0';
         this.scrollTo(this.menuItems[0].id, '0');
       }
     },
+
     onScroll() {
       if (this.disableScrollEvent) return;
       this.debounce(this.updateActiveMenuOnScroll, 20)();
     },
+
     initializeObserver() {
       if (this.observer) return;
+
       const options = {
         root: this.$refs.content,
         rootMargin: '0px',
         threshold: 0.1,
       };
+
       this.observer = new IntersectionObserver(this.handleIntersect, options);
-      const elements = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3');
-      elements.forEach((element) => this.observer.observe(element));
+      document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3').forEach((element) => {
+        this.observer.observe(element);
+      });
     },
+
     handleIntersect(entries) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -198,19 +207,24 @@ export default {
         }
       });
     },
+
     updateActiveMenuOnScroll() {
       const scrollTop = this.$refs.content.scrollTop;
       const headings = Array.from(document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3'));
+
       const closestHeading = headings.reduce((closest, heading) => {
         const headingOffset = Math.abs(heading.offsetTop - scrollTop);
-        return headingOffset < closest.offset ? {heading, offset: headingOffset} : closest;
-      }, {heading: null, offset: Infinity});
+        return headingOffset < closest.offset ? { heading, offset: headingOffset } : closest;
+      }, { heading: null, offset: Infinity });
+
       if (closestHeading.heading) {
         this.setActiveMenu(this.getMenuIndexById(closestHeading.heading.id));
       }
     },
+
     getMenuIndexById(id) {
       let index = null;
+
       this.menuItems.forEach((item, i) => {
         if (item.id === id) index = i.toString();
         item.subItems?.forEach((subItem, j) => {
@@ -220,22 +234,25 @@ export default {
           });
         });
       });
+
       return index;
     },
+
     handleCopyButtonClick(event) {
       if (event.target.classList.contains('copy-button')) {
-        const code = event.target.dataset.code;
-        this.copyToClipboard(code);
+        this.copyToClipboard(event.target.dataset.code);
       }
     },
+
     async copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
         ElMessage.success('Code copied to clipboard!');
-      } catch (e) {
+      } catch {
         ElMessage.error('Failed to copy code!');
       }
     },
+
     debounce(func, wait) {
       let timeout;
       return function (...args) {
@@ -270,8 +287,7 @@ export default {
   li {
     margin-bottom: 5px;
 
-    /* Top-level menu items (H1) */
-    & > a {
+    a {
       font-size: 1.2em;
       font-weight: bold;
       color: #333;
@@ -279,9 +295,8 @@ export default {
       display: block;
       transition: background-color 0.3s;
       border-radius: 6px;
-      position: relative;
       border-left: 4px solid transparent;
-      text-decoration: none; // Add this line to remove underline
+      text-decoration: none;
 
       &:hover {
         background-color: #409EFF;
@@ -290,12 +305,11 @@ export default {
       }
     }
 
-    /* Second-level items (H2) */
     ul {
       list-style-type: none;
       padding-left: 15px;
 
-      li > a {
+      li a {
         font-size: 1em;
         font-weight: normal;
         color: #555;
@@ -304,7 +318,7 @@ export default {
         transition: background-color 0.3s;
         border-radius: 4px;
         border-left: 4px solid transparent;
-        text-decoration: none; // Add this line to remove underline
+        text-decoration: none;
 
         &:hover {
           background-color: #53a8ff;
@@ -313,12 +327,10 @@ export default {
         }
       }
 
-      /* Third-level items (H3) */
       ul {
-        list-style-type: none;
         padding-left: 15px;
 
-        li > a {
+        li a {
           font-size: 0.9em;
           font-weight: lighter;
           color: #777;
@@ -327,7 +339,7 @@ export default {
           transition: background-color 0.3s;
           border-radius: 4px;
           border-left: 4px solid transparent;
-          text-decoration: none; // Add this line to remove underline
+          text-decoration: none;
 
           &:hover {
             background-color: #69b0ff;
@@ -339,13 +351,11 @@ export default {
     }
   }
 
-  /* Active state styling */
   .active {
     background-color: #409EFF;
     color: white !important;
     border-left-color: #409EFF !important;
 
-    /* Active styling for nested items */
     ul .active {
       background-color: #53a8ff;
       border-left-color: #53a8ff;
@@ -365,7 +375,6 @@ export default {
 }
 
 .markdown-body {
-  box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
   padding: 20px;
@@ -374,7 +383,7 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-:deep(pre) {
+:deep(pre)  {
   position: relative;
   background-color: #1e1e1e;
   padding: 16px;
@@ -396,10 +405,10 @@ export default {
     position: absolute;
     top: 10px;
     right: 10px;
-  }
 
-  button:hover {
-    background-color: #005f9e;
+    &:hover {
+      background-color: #005f9e;
+    }
   }
 }
 
@@ -408,12 +417,10 @@ export default {
   top: 8px;
   left: 8px;
   background-color: #007acc;
-  color: #fff;
+  color: white;
   padding: 2px 6px;
   border-radius: 3px;
   font-size: 12px;
   font-family: Arial, sans-serif;
 }
-
 </style>
-

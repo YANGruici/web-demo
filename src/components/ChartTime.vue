@@ -19,7 +19,6 @@ export default {
       const myChart = echarts.init(chartDom);
       const { subtext, timelineData, titles, seriesData } = this.chartData;
 
-      // 提取所有 seriesData 的 name
       const legendData = seriesData.flatMap(data => data.map(series => series.name));
 
       const options = seriesData.map((data, index) => ({
@@ -44,7 +43,7 @@ export default {
           tooltip: {},
           legend: {
             x: 'right',
-            data: legendData,  // 使用动态 legendData
+            data: legendData,
             selectedMode: 'single'
           },
           calculable: true,

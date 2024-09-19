@@ -16,7 +16,7 @@
             Start
           </button>
           <div class="illustration">
-            <img :src="img" />
+            <img :src="img" loading="lazy" alt="Illustration" />
             <div class="credit">
               Illustration by <a href="https://icons8.com/illustrations/author/N3YOxdn12Kox">Marina Mogulska</a>
               from <a href="https://icons8.com/illustrations">Ouch!</a>
@@ -30,11 +30,10 @@
     </div>
   </div>
 </template>
-
 <script>
 import SpinnerLoader from '@/components/SpinnerLoader';
 import 'animate.css';
-import { particles } from '@/assets/js/particles.js'
+import { particles } from '@/assets/js/particles.js';
 
 export default {
   name: 'App',
@@ -60,8 +59,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.hideLoader();});
+    this.$nextTick(() => {
+      this.hideLoader();
+    });
   }
 }
 </script>
@@ -71,7 +71,11 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  overflow: hidden; /* 去掉滑动框 */
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .header {
@@ -84,36 +88,35 @@ export default {
 .animated-text {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 水平分布 */
+  justify-content: space-between;
   text-align: center;
   font-family: Qwigley-Regular;
   color: black;
-  font-size: 60px;
+  font-size: 4vw; /* Use responsive units */
   height: 100vh;
   width: 100%;
-  box-sizing: border-box; /* 确保内边距包含在总宽度中 */
+  padding: 20px;
 }
 
 .text-container {
-  padding: 20px;
-  flex: 2; /* 适当分配空间 */
+  flex: 2;
 }
 
 .illustration {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 2; /* 适当分配空间 */
+  flex: 2;
 }
 
 .credit {
-  font-size: 10px;
+  font-size: 0.75rem;
   text-align: center;
 }
 
 .show-content-button {
   z-index: 1;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
   background-color: #409eff;
   color: white;
@@ -121,9 +124,13 @@ export default {
   border-radius: 5px;
   transition: transform 0.3s ease, background-color 0.3s ease;
   justify-content: space-between;
+  padding: 0.5em 1em;
+  display: flex;
+  align-items: center;
 }
 
-.show-content-button:hover {
+.show-content-button:hover,
+.show-content-button:focus {
   transform: scale(1.1);
   background-color: #2980b9;
 }
@@ -132,12 +139,11 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-
 }
 
 router-view {
   display: flex;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
   flex: 1;
 }
@@ -145,9 +151,8 @@ router-view {
 .icon {
   width: 2em;
   height: 1.5em;
-  vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
-  margin: 0px;
+  margin-right: 0.5em;
 }
 </style>
