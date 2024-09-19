@@ -39,6 +39,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { fetchMarkdown } from '@/utils/markdown';
 import { marked } from 'marked';
@@ -105,23 +106,12 @@ export default {
       button.textContent = 'Copy';
       button.className = 'copy-button';
       button.dataset.code = block.textContent;
-      button.style.position = 'absolute';
-      button.style.top = '10px';
-      button.style.right = '10px';
-      button.style.opacity = '0';
-      button.style.transition = 'opacity 0.3s';
-
-      pre.style.position = 'relative';
       pre.appendChild(button);
 
-      // Show button on hover
-      pre.addEventListener('mouseover', () => {
-        button.style.opacity = '1';
-      });
-      pre.addEventListener('mouseout', () => {
-        button.style.opacity = '0';
-      });
-    },
+      // Ensure button is hidden by default
+      pre.style.position = 'relative';
+    }
+    ,
 
     generateMenu(htmlContent) {
       const menuItems = [];
@@ -265,6 +255,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .markdown-renderer {
   display: flex;
@@ -385,7 +376,7 @@ export default {
 }
 
 :deep(pre) {
-  position: relative; /* 使按钮相对于 pre 定位 */
+  position: relative; /* Ensure the button is positioned relative to the pre element */
   background-color: #1e1e1e;
   padding: 16px;
   border-radius: 10px;
@@ -393,10 +384,6 @@ export default {
   color: #dcdcdc;
   font-size: 14px;
   font-family: 'Fira Code', monospace;
-
-  &:hover button {
-    opacity: 1; /* 鼠标悬停时显示按钮 */
-  }
 
   button {
     background-color: #007acc;
@@ -410,16 +397,15 @@ export default {
     position: absolute;
     top: 10px;
     right: 10px;
-    opacity: 0; /* 默认不可见 */
+    opacity: 0; /* Default to hidden */
+    visibility: hidden; /* Ensure it is not visible initially */
   }
 
-  &:hover {
-    background-color: #333; /* 代码块变暗，可以忽略 */
+  &:hover button {
+    opacity: 1; /* Show button on hover */
+    visibility: visible; /* Ensure visibility on hover */
   }
 }
 
-:deep(.copy-button) {
-  opacity: 0; /* 按钮初始状态下不可见 */
-  transition: opacity 0.3s; /* 鼠标悬停时过渡显示 */
-}
+
 </style>
